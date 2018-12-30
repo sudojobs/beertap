@@ -3,8 +3,9 @@ $(document).ready(function(){
     var numbers_received = [];
 
     socket.on('newnumber', function(msg) {
-        console.log("Received number" + msg.number);
-        $('#log').html(msg.number);
+        console.log("Received numbers" + msg.tap1 + msg.tap2);
+        $('#tap1').html(msg.tap1);
+        $('#tap2').html(msg.tap2);        
     });
 
 });
