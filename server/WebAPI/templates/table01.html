@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html> <html lang="en"> <head>
   <title>BeerTap</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,10 +11,13 @@
   <script src="static/js/application.js"></script>
 
 <style>
+  h1 {
+      font-size:150%; 
+     } 
   body {
     font: 20px Montserrat, sans-serif;
     line-height: 2.0;
-    color: #000000;
+    background-color: #000000;
   }
   p {font-size: 20px;}
   .margin {margin-bottom: 45px;}
@@ -25,17 +26,22 @@
     color: #ffffff;
   }
   .container-fluid {
-    padding-top: 70px;
-    padding-bottom: 80px;
+    padding-top: 40px;
+    padding-bottom: 10px;
   }
   </style>
 </head>
 <body>
 <div class="container-fluid bg-1 text-center">
 <img src="/static/beer.png" alt="Beer" width="300" height="240">
-<h1 align="left" style="padding:49px;margin=49px;font-size:60px;" id="log">
-</h1>
-<br>
+<div class="container" id="content">
+<div class="row">
+<div class="col-md-6"><span class="pull-left"><h1 style=font-size:100px id="tap1"></h1></span></div>
+<div class="col-md-6"><span class="pull-right"><h1 style=font-size:100px id="tap2"></h1></span></div>
+</div>
+</div>  
+
 </div>
 </body>
 </html>
+

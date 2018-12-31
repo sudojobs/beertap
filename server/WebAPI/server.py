@@ -4,14 +4,44 @@ from gpiozero import LED
 from gpiozero.pins.pigpio import PiGPIOFactory
 from time import sleep
 import paho.mqtt.client as mqtt
-MQTT_PATH   = "test_channel"
-MQTT_SERVER= "192.168.1.9" 
+from flask_socketio import SocketIO
+from threading import Thread, Event
+
+__author__ = '--'
 
 
-factory = PiGPIOFactory(host='192.168.1.9')
-led = LED(18, pin_factory=factory)
+MQTT_PATH   = "table_01"
+MQTT_SERVER= "192.168.0.122" 
 
+
+factory = PiGPIOFactory(host='192.168.0.122')
+led = LED(21, pin_factory=factory)
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret'
+app.config['DEBUG'] = True
+
+# turn the flask app into a socketio app
+socketio = SocketIO(app)
+
+
+@socketio.on('connect', namespace='/test')
+def test_connect():
+     print('Cient connected')
+
+@socketio.on('disconnect', namespace='/test')
+def test_disconnect():
+     print('Cient disconnected')
+
+
+@app.route('/table01')
+def table01():
+    return render_template('table01.html')
+
+@app.route('/table02')
+def table02():
+    return render_template('table02.html')
+
+
 
 #GPIO.setmode(GPIO.BCM)
 
@@ -27,6 +57,16 @@ def Setup():
     #    GPIO.setup(relayIdToPin[relay['id']],GPIO.OUT)
     #    GPIO.output(relayIdToPin[relay['id']],relayStateToGPIOState[relay['state']])
 
+@socketio.on('connect', namespace='/test')
+def test_connect():
+     print('Cient connected')
+
+@socketio.on('disconnect', namespace='/test')
+def test_disconnect():
+     print('Cient disconnected')
+
+
+
 def UpdatePinFromRelayObject(relay):
     print (relay)
     if(relay['state']=='on'): 
@@ -38,7 +78,7 @@ def UpdatePinFromRelayObject(relay):
 @app.route('/WebRelay/', methods=['GET'])
 def index():
     return render_template('Index.html');
-        
+
 @app.route('/WebRelay/api/relays', methods=['GET'])
 def get_relays():
     return jsonify({'relays': relays})
@@ -74,11 +114,19 @@ def on_connect(client, userdata, flags, rc):
 
   # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    print("%s %s" % (msg.topic,msg.payload))
-    table=msg.payload.decode('utf-8')
-    status=msg.payload.decode('utf-8')
-    print(table)
-    print(status) 
+    #print("%s %s" % (msg.topic,msg.payload))
+    status=str(msg.payload.decode('utf-8','ignore'))
+    sup=status.split(",")
+    a=sup[0].split(":")
+    b=sup[1].split(":")
+    number1=a[1]
+    temp=b[1] 
+    number2=temp[:-1]
+    print(number1)
+    print(number2)
+    data = {'tap1': number1, 'tap2': number2}
+    print(data) 
+    socketio.emit('newnumber', data, namespace='/test')
 
 
 if __name__ == "__main__":
@@ -94,7 +142,7 @@ if __name__ == "__main__":
         # Other loop*() functions are available that give a threaded interface and a
         # manual interface.
         client.loop_start()
-        app.run(host='0.0.0.0',port=80,debug=False)
+        socketio.run(app,host='0.0.0.0',port=80,debug=False)
     finally:
         print("cleaning up")
         #GPIO.cleanup()
