@@ -16,6 +16,7 @@ tap2 = 0
 
 def tap1Pulse(channel):
    global t1count
+   time.sleep(0.5)      
    if (GPIO.input(tcfg.tap1)):
        global t1count
        t1count = t1count + 1
@@ -23,6 +24,7 @@ def tap1Pulse(channel):
 
 def tap2Pulse(channel):
    global t2count
+   time.sleep(0.5)      
    if (GPIO.input(tcfg.tap2)):
        global t2count
        t2count = t2count + 1
@@ -41,12 +43,11 @@ while True:
      if(GPIO.input(tcfg.relay)):
         tap1 = t1count
         tap2 = t2count
-        print (tap1)
-        print (tap2)
         message= {}
         message['tap2']=tap2
         message['tap1']=tap1
         fullmessage=json.dumps(message) 
+        print(fullmessage) 
         publish.single(tcfg.TABLE_ID,fullmessage, hostname=tcfg.TABLE_IP)
   
      else:
