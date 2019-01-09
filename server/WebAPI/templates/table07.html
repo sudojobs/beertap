@@ -29,15 +29,28 @@
     padding-top: 40px;
     padding-bottom: 10px;
   }
+
+.bottom-left {
+  position: fixed;
+  bottom: 20px;
+  left: 85px;
+}
+
+.bottom-right {
+  position: fixed;
+  bottom: 20px;
+  right: 190px;
+}
   </style>
 </head>
 <body>
 <div class="container-fluid bg-1 text-center">
-<img src="/static/beer.png" alt="Beer" width="300" height="240">
+<img src="/static/beer.jpg" alt="Beer" style="width:99%;border: 0;">
+
 <div class="container" id="content">
 <div class="row">
-<div class="col-md-6"><span class="pull-left"><h1 style=font-size:100px id="tap1"></h1></span></div>
-<div class="col-md-6"><span class="pull-right"><h1 style=font-size:100px id="tap2"></h1></span></div>
+<div class="bottom-left"><span class="pull-left"><h1 style="font-size:30px;" id="tap1"></h1></span></div>
+<div class="bottom-right"><span class="pull-right"><h1 style="font-size:30px;" id="tap2"></h1></span></div>
 </div>
 </div>  
 
