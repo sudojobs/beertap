@@ -8,8 +8,7 @@ relays = [
     { 'id' : 7, 'name' : 'Table-07', 'state' : 'off'},
     { 'id' : 8, 'name' : 'Table-08', 'state' : 'off'},
     { 'id' : 9, 'name' : 'Table-09', 'state' : 'off'},
-    { 'id' : 10,'name' : 'Table-10', 'state' : 'off'},
-    { 'id' : 11,'name' : 'Table-11', 'state' : 'off'}
+    { 'id' : 10,'name' : 'Table-10', 'state' : 'off'}
     ]
 
 relayIdToPin = {
