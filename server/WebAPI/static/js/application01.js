@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var socket = io.connect('http://' + document.domain + ':' + location.port + '/t01test');
+    var socket = io.connect('http://' + document.domain + ':' + location.port + '/t0test');
     var numbers_received = [];
 
     socket.on('t01number', function(msg) {
