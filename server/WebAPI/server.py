@@ -1,3 +1,5 @@
+
+
 from flask import Flask, jsonify, abort, request, render_template
 from relaydefinitions import relays, relayIdToPin
 from gpiozero import LED
@@ -6,44 +8,73 @@ from time import sleep
 import paho.mqtt.client as mqtt
 from flask_socketio import SocketIO
 from threading import Thread, Event
-from configuration import cfg 
+import requests
+import json
 
 __author__ = '--'
+# defining the api-endpoint  
+API_ENDPOINT = "https://dev-api.hk.eats365.net/o/oauth2/token"
+
+RestaurantName  ="BeerTap" 
+RestaurantCode  ="HK054042"
+APIClientID     ="d3c345808af848adb6c89a43a48e18be"
+
+APIClientSecret ="66f7456893ca4dce855bfa481a68aa9fe3a42b04a95d4ee2bbb385096cecded0"
+
+# data to be sent to api 
+data = {'client_id':APIClientID, 
+        'client_secret':APIClientSecret, 
+        'grant_type':"client_credentials"} 
+  
+# sending post request and saving response as response object 
+r = requests.post(url = API_ENDPOINT, data = data) 
+
+accessdata=r.json()
+AccessToken= accessdata['access_token']
+TokenType= accessdata['token_type']
+#print AccessToken 
+#print TokenType
+# api-endpoint 
+URL = "https://dev-opi.hk.eats365.net/v1/menu/init"
+head= "Bearer %s" % AccessToken
 
 
-#MQTT_PATH   = "table_01"
-#MQTT_SERVER= "192.168.0.122" 
+PARAMS = { 'restaurant_code':RestaurantCode }
+HEADER = { 'Authorization':head } 
+### sending get request and saving the response as response object 
+p = requests.get(url = URL, headers=HEADER, params = PARAMS) 
+### extracting data in json format 
+data = p.json()
+#print data
+#ProductID=data["restaurant_list"]
+#print(json.dumps(ProductID, indent=4, separators=(". ", " = ")))
 
-tb01_fact = pigpiofactory(host=cfg.table01_ip)
-tb01 = LED(cfg.relay, pin_factory=tb01_fact)
+MQTT_PATH   =[ ("A4",0),("A6",0),("A1",0),("A3",0),("C1",0),("C2",0),("C3",0),("V1",0),("V2",0),("V4",0)]
+MQTT_SERVER= "localhost" 
 
-tb02_fact = pigpiofactory(host=cfg.table02_ip)
-tb02 = LED(cfg.relay, pin_factory=tb02_fact)
+fa1 = PiGPIOFactory(host='192.168.1.116')
+fa4 = PiGPIOFactory(host='192.168.1.111')
+fa3 = PiGPIOFactory(host='192.168.1.107')
+fa6 = PiGPIOFactory(host='192.168.1.109')
+fc1 = PiGPIOFactory(host='192.168.1.110')
+fc2 = PiGPIOFactory(host='192.168.1.113')
+fc3 = PiGPIOFactory(host='192.168.1.103')
+fv4 = PiGPIOFactory(host='192.168.1.114')
+fv2 = PiGPIOFactory(host='192.168.1.117')
+fv1 = PiGPIOFactory(host='192.168.1.105')
 
-tb03_fact = pigpiofactory(host=cfg.table03_ip)
-tb03 = LED(cfg.relay, pin_factory=tb03_fact)
 
-tb04_fact = pigpiofactory(host=cfg.table04_ip)
-tb04 = LED(cfg.relay, pin_factory=tb04_fact)
+A1 = LED(24, pin_factory=fa1)
+A4 = LED(24, pin_factory=fa4)
+A3 = LED(24, pin_factory=fa3)
+A6 = LED(24, pin_factory=fa6)
+C1 = LED(24, pin_factory=fc1) 
+C2 = LED(24, pin_factory=fc2) 
+C3 = LED(24, pin_factory=fc3) 
 
-tb05_fact = pigpiofactory(host=cfg.table05_ip)
-tb05 = LED(cfg.relay, pin_factory=tb05_fact)
-
-tb06_fact = pigpiofactory(host=cfg.table06_ip)
-tb06 = LED(cfg.relay, pin_factory=tb06_fact)
-
-tb07_fact = pigpiofactory(host=cfg.table07_ip)
-tb07 = LED(cfg.relay, pin_factory=tb07_fact)
-
-tb08_fact = pigpiofactory(host=cfg.table08_ip)
-tb08 = LED(cfg.relay, pin_factory=tb08_fact)
-
-tb09_fact = pigpiofactory(host=cfg.table09_ip)
-tb09 = LED(cfg.relay, pin_factory=tb09_fact)
-
-tb10_fact = pigpiofactory(host=cfg.table10_ip)
-tb10 = LED(cfg.relay, pin_factory=tb10_fact)
-
+V4 = LED(24, pin_factory=fv4) 
+V2 = LED(24, pin_factory=fv2) 
+V1 = LED(24, pin_factory=fv1) 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
@@ -53,18 +84,41 @@ app.config['DEBUG'] = True
 socketio = SocketIO(app)
 
 
-@socketio.on('connect', namespace='/t01test')
+@socketio.on('connect', namespace='/t0test')
 def test_connect():
      print('Cient connected')
 
-@socketio.on('disconnect', namespace='/t01test')
+@socketio.on('disconnect', namespace='/t0test')
 def test_disconnect():
      print('Cient disconnected')
 
 
-#------------------------------------------------------
-#Table Webpages
-#------------------------------------------------------
+@socketio.on('connect', namespace='/t1test')
+def test_connect():
+     print('Cient connected')
+
+@socketio.on('disconnect', namespace='/t1test')
+def test_disconnect():
+     print('Cient disconnected')
+
+
+@socketio.on('connect', namespace='/t2test')
+def test_connect():
+     print('Cient connected')
+
+@socketio.on('disconnect', namespace='/t2test')
+def test_disconnect():
+     print('Cient disconnected')
+
+
+@socketio.on('connect', namespace='/t3test')
+def test_connect():
+     print('Cient connected')
+
+@socketio.on('disconnect', namespace='/t3test')
+def test_disconnect():
+     print('Cient disconnected')
+
 
 @app.route('/table01')
 def table01():
@@ -82,96 +136,109 @@ def table03():
 def table04():
     return render_template('table04.html')
 
-@app.route('/table05')
-def table05():
-    return render_template('table05.html')
 
-@app.route('/table06')
-def table06():
-    return render_template('table06.html')
+#GPIO.setmode(GPIO.BCM)
 
-@app.route('/table07')
-def table07():
-    return render_template('table07.html')
-
-@app.route('/table08')
-def table08():
-    return render_template('table08.html')
-
-@app.route('/table09')
-def table09():
-    return render_template('table09.html')
-
-@app.route('/table10')
-def table10():
-    return render_template('table10.html')
-
+#relayStateToGPIOState = {
+#    'off' : GPIO.LOW,
+#    'on' : GPIO.HIGH
+#    }
 
 def Setup():
     print("Setup Complete") 
 
-@socketio.on('connect', namespace='/t01test')
+#for relay in relays:
+    #    GPIO.setup(relayIdToPin[relay['id']],GPIO.OUT)
+    #    GPIO.output(relayIdToPin[relay['id']],relayStateToGPIOState[relay['state']])
+
+@socketio.on('connect', namespace='/t0test')
 def test_connect():
      print('Cient connected')
 
-@socketio.on('disconnect', namespace='/t01test')
+@socketio.on('disconnect', namespace='/t0test')
 def test_disconnect():
      print('Cient disconnected')
 
 
-def UpdatePinFromRelayObject(relay):
-    print (relay)
-    if(relay['id'] == 1):
-      if(relay['state']=='on'): 
-         tb01.on()
-      else:
-         tb01.off()
-    elif(relay[id] ==2):
-      if(relay['state']=='on'): 
-         tb02.on()
-      else:
-         tb02.off()
-    elif(relay[id] ==3):
-      if(relay['state']=='on'): 
-         tb03.on()
-      else:
-         tb03.off()
-    elif(relay[id] ==4):
-      if(relay['state']=='on'): 
-         tb04.on()
-      else:
-         tb04.off()
-    elif(relay[id] ==5):
-      if(relay['state']=='on'): 
-         tb05.on()
-      else:
-         tb05.off()
-    elif(relay[id] ==6):
-      if(relay['state']=='on'): 
-         tb06.on()
-      else:
-         tb06.off()
-    elif(relay[id] ==7):
-      if(relay['state']=='on'): 
-         tb07.on()
-      else:
-         tb07.off()
-    elif(relay[id] ==8):
-      if(relay['state']=='on'): 
-         tb08.on()
-      else:
-         tb08.off()
-    elif(relay[id] ==9):
-      if(relay['state']=='on'): 
-         tb09.on()
-      else:
-         tb09.off()
-    elif(relay[id] ==10):
-      if(relay['state']=='on'): 
-         tb10.on()
-      else:
-         tb10.off()
+@socketio.on('connect', namespace='/t1test')
+def test_connect():
+     print('Cient connected')
 
+@socketio.on('disconnect', namespace='/t1test')
+def test_disconnect():
+     print('Cient disconnected')
+
+
+@socketio.on('connect', namespace='/t2test')
+def test_connect():
+     print('Cient connected')
+
+@socketio.on('disconnect', namespace='/t2test')
+def test_disconnect():
+     print('Cient disconnected')
+
+
+@socketio.on('connect', namespace='/t3test')
+def test_connect():
+     print('Cient connected')
+
+@socketio.on('disconnect', namespace='/t3test')
+def test_disconnect():
+     print('Cient disconnected')
+
+def UpdatePinFromRelayObject(relay):
+    if(relay['id'] ==1):  
+       if(relay['state']=='on'): 
+          A3.on()
+       else:
+          A3.off()
+    elif(relay['id'] ==2):
+       if(relay['state']=='on'): 
+          A1.on()
+       else:
+          A1.off()
+    elif(relay['id'] ==3):
+       if(relay['state']=='on'): 
+          A4.on()
+       else:
+          A4.off()
+    elif(relay['id'] ==4):
+       if(relay['state']=='on'): 
+          A6.on()
+       else:
+          A6.off()
+    elif(relay['id'] ==5):
+       if(relay['state']=='on'): 
+          C1.on()
+       else:
+          C1.off()
+    elif(relay['id'] ==6):
+       if(relay['state']=='on'): 
+          C2.on()
+       else:
+          C2.off()
+    elif(relay['id'] ==7):
+       if(relay['state']=='on'): 
+          C3.on()
+       else:
+          C3.off()
+    elif(relay['id'] ==8):
+       if(relay['state']=='on'): 
+          V4.on()
+       else:
+          V4.off()
+    elif(relay['id'] ==9):
+       if(relay['state']=='on'): 
+          V2.on()
+       else:
+          V2.off()
+    elif(relay['id'] ==10):
+       if(relay['state']=='on'): 
+          V1.on()
+       else:
+          V1.off()
+
+    #GPIO.output(relayIdToPin[relay['id']],relayStateToGPIOState[relay['state']])
 
 @app.route('/WebRelay/', methods=['GET'])
 def index():
@@ -204,15 +271,15 @@ def update_relay(relay_id):
     UpdatePinFromRelayObject(relay)
     return jsonify({'relay': relay})
 
-def on_connect_table01(client, userdata, flags, rc):
+def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
   # Subscribing in on_connect() means that if we lose the connection and
   # reconnect then subscriptions will be renewed.
-    client.subscribe("table_01")
+    client.subscribe(MQTT_PATH)
 
   # The callback for when a PUBLISH message is received from the server.
-def on_message_table01(client, userdata, msg):
-    #print("%s %s" % (msg.topic,msg.payload))
+def on_message(client, userdata, msg):
+    print("%s %s" % (msg.topic,msg.payload))
     status=str(msg.payload.decode('utf-8','ignore'))
     sup=status.split(",")
     a=sup[0].split(":")
@@ -220,278 +287,31 @@ def on_message_table01(client, userdata, msg):
     number1=a[1]
     temp=b[1] 
     number2=temp[:-1]
-    print(number1)
-    print(number2)
     data = {'tap1': number1, 'tap2': number2}
-    print(data) 
-    #socketio.emit('newnumber', data, namespace='/test')
-    socketio.emit('t01number', data, namespace='/t01test')
-
-
-def on_connect_table02(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-  # Subscribing in on_connect() means that if we lose the connection and
-  # reconnect then subscriptions will be renewed.
-    client.subscribe("table_02")
-
-  # The callback for when a PUBLISH message is received from the server.
-def on_message_table02(client, userdata, msg):
-    #print("%s %s" % (msg.topic,msg.payload))
-    status=str(msg.payload.decode('utf-8','ignore'))
-    sup=status.split(",")
-    a=sup[0].split(":")
-    b=sup[1].split(":")
-    number1=a[1]
-    temp=b[1] 
-    number2=temp[:-1]
-    print(number1)
-    print(number2)
-    data = {'tap1': number1, 'tap2': number2}
-    print(data) 
-    socketio.emit('t02number', data, namespace='/t02test')
-
-
-def on_connect_table03(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-  # Subscribing in on_connect() means that if we lose the connection and
-  # reconnect then subscriptions will be renewed.
-    client.subscribe("table_03")
-
-  # The callback for when a PUBLISH message is received from the server.
-def on_message_table03(client, userdata, msg):
-    #print("%s %s" % (msg.topic,msg.payload))
-    status=str(msg.payload.decode('utf-8','ignore'))
-    sup=status.split(",")
-    a=sup[0].split(":")
-    b=sup[1].split(":")
-    number1=a[1]
-    temp=b[1] 
-    number2=temp[:-1]
-    print(number1)
-    print(number2)
-    data = {'tap1': number1, 'tap2': number2}
-    print(data) 
-    socketio.emit('t03number', data, namespace='/t03test')
-
-
-def on_connect_table04(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-  # Subscribing in on_connect() means that if we lose the connection and
-  # reconnect then subscriptions will be renewed.
-    client.subscribe("table_04")
-
-  # The callback for when a PUBLISH message is received from the server.
-def on_message_table04(client, userdata, msg):
-    #print("%s %s" % (msg.topic,msg.payload))
-    status=str(msg.payload.decode('utf-8','ignore'))
-    sup=status.split(",")
-    a=sup[0].split(":")
-    b=sup[1].split(":")
-    number1=a[1]
-    temp=b[1] 
-    number2=temp[:-1]
-    print(number1)
-    print(number2)
-    data = {'tap1': number1, 'tap2': number2}
-    print(data) 
-    socketio.emit('t04number', data, namespace='/t04test')
-
-
-def on_connect_table05(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-  # Subscribing in on_connect() means that if we lose the connection and
-  # reconnect then subscriptions will be renewed.
-    client.subscribe("table_05")
-
-  # The callback for when a PUBLISH message is received from the server.
-def on_message_table05(client, userdata, msg):
-    #print("%s %s" % (msg.topic,msg.payload))
-    status=str(msg.payload.decode('utf-8','ignore'))
-    sup=status.split(",")
-    a=sup[0].split(":")
-    b=sup[1].split(":")
-    number1=a[1]
-    temp=b[1] 
-    number2=temp[:-1]
-    print(number1)
-    print(number2)
-    data = {'tap1': number1, 'tap2': number2}
-    print(data) 
-    socketio.emit('t05number', data, namespace='/t05test')
-
-
-def on_connect_table06(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-  # Subscribing in on_connect() means that if we lose the connection and
-  # reconnect then subscriptions will be renewed.
-    client.subscribe("table_06")
-
-  # The callback for when a PUBLISH message is received from the server.
-def on_message_table06(client, userdata, msg):
-    #print("%s %s" % (msg.topic,msg.payload))
-    status=str(msg.payload.decode('utf-8','ignore'))
-    sup=status.split(",")
-    a=sup[0].split(":")
-    b=sup[1].split(":")
-    number1=a[1]
-    temp=b[1] 
-    number2=temp[:-1]
-    print(number1)
-    print(number2)
-    data = {'tap1': number1, 'tap2': number2}
-    print(data) 
-    socketio.emit('t06number', data, namespace='/t06test')
-
-
-def on_connect_table07(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-  # Subscribing in on_connect() means that if we lose the connection and
-  # reconnect then subscriptions will be renewed.
-    client.subscribe("table_07")
-
-  # The callback for when a PUBLISH message is received from the server.
-def on_message_table07(client, userdata, msg):
-    #print("%s %s" % (msg.topic,msg.payload))
-    status=str(msg.payload.decode('utf-8','ignore'))
-    sup=status.split(",")
-    a=sup[0].split(":")
-    b=sup[1].split(":")
-    number1=a[1]
-    temp=b[1] 
-    number2=temp[:-1]
-    print(number1)
-    print(number2)
-    data = {'tap1': number1, 'tap2': number2}
-    print(data) 
-    socketio.emit('t07number', data, namespace='/t07test')
-
-
-def on_connect_table08(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-  # Subscribing in on_connect() means that if we lose the connection and
-  # reconnect then subscriptions will be renewed.
-    client.subscribe("table_08")
-
-  # The callback for when a PUBLISH message is received from the server.
-def on_message_table08(client, userdata, msg):
-    #print("%s %s" % (msg.topic,msg.payload))
-    status=str(msg.payload.decode('utf-8','ignore'))
-    sup=status.split(",")
-    a=sup[0].split(":")
-    b=sup[1].split(":")
-    number1=a[1]
-    temp=b[1] 
-    number2=temp[:-1]
-    print(number1)
-    print(number2)
-    data = {'tap1': number1, 'tap2': number2}
-    print(data) 
-    socketio.emit('t08number', data, namespace='/t08test')
-
-def on_connect_table09(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-  # Subscribing in on_connect() means that if we lose the connection and
-  # reconnect then subscriptions will be renewed.
-    client.subscribe("table_09")
-
-  # The callback for when a PUBLISH message is received from the server.
-def on_message_table09(client, userdata, msg):
-    #print("%s %s" % (msg.topic,msg.payload))
-    status=str(msg.payload.decode('utf-8','ignore'))
-    sup=status.split(",")
-    a=sup[0].split(":")
-    b=sup[1].split(":")
-    number1=a[1]
-    temp=b[1] 
-    number2=temp[:-1]
-    print(number1)
-    print(number2)
-    data = {'tap1': number1, 'tap2': number2}
-    print(data) 
-    socketio.emit('t09number', data, namespace='/t09test')
-
-def on_connect_table10(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-  # Subscribing in on_connect() means that if we lose the connection and
-  # reconnect then subscriptions will be renewed.
-    client.subscribe("table_10")
-
-  # The callback for when a PUBLISH message is received from the server.
-def on_message_table10(client, userdata, msg):
-    #print("%s %s" % (msg.topic,msg.payload))
-    status=str(msg.payload.decode('utf-8','ignore'))
-    sup=status.split(",")
-    a=sup[0].split(":")
-    b=sup[1].split(":")
-    number1=a[1]
-    temp=b[1] 
-    number2=temp[:-1]
-    print(number1)
-    print(number2)
-    data = {'tap1': number1, 'tap2': number2}
-    print(data) 
-    socketio.emit('t10number', data, namespace='/t10test')
+    print(data)
+    if(msg.topic=='A1'): 
+       socketio.emit('t01number', data, namespace='/t0test')
+    elif(msg.topic=='A3'):
+       socketio.emit('t02number', data, namespace='/t1test')
+    elif(msg.topic=='A4'):
+       socketio.emit('t03number', data, namespace='/t2test')
+    elif(msg.topic=='A6'):
+       socketio.emit('t04number', data, namespace='/t3test')
 
 
 if __name__ == "__main__":
     print("starting...")
     try:
         Setup()
-        table01 = mqtt.Client()
-        table02 = mqtt.Client()
-        table03 = mqtt.Client()
-        table04 = mqtt.Client()
-        table05 = mqtt.Client()
-        table06 = mqtt.Client()
-        table07 = mqtt.Client()
-        table08 = mqtt.Client()
-        table09 = mqtt.Client()
-        table10 = mqtt.Client()
-        table01.on_connect = on_connect_table01
-        table01.on_message = on_message_table01
-        table02.on_connect = on_connect_table02
-        table02.on_message = on_message_table02
-        table03.on_connect = on_connect_table03
-        table03.on_message = on_message_table03
-        table04.on_connect = on_connect_table04
-        table04.on_message = on_message_table04
-        table05.on_connect = on_connect_table05
-        table05.on_message = on_message_table05
-        table06.on_connect = on_connect_table06
-        table06.on_message = on_message_table06
-        table07.on_connect = on_connect_table07
-        table07.on_message = on_message_table07
-        table08.on_connect = on_connect_table08
-        table08.on_message = on_message_table08
-        table09.on_connect = on_connect_table09
-        table09.on_message = on_message_table09
-        table10.on_connect = on_connect_table10
-        table10.on_message = on_message_table10
-        #client.connect(MQTT_SERVER, 1883, 60)
-        table01.connect(cfg.table01_ip, 1883, 60)
-        table02.connect(cfg.table02_ip, 1883, 60)
-        table03.connect(cfg.table03_ip, 1883, 60)
-        table04.connect(cfg.table04_ip, 1883, 60)
-        table05.connect(cfg.table05_ip, 1883, 60)
-        table06.connect(cfg.table06_ip, 1883, 60)
-        table07.connect(cfg.table07_ip, 1883, 60)
-        table08.connect(cfg.table08_ip, 1883, 60)
-        table09.connect(cfg.table09_ip, 1883, 60)
-        table10.connect(cfg.table10_ip, 1883, 60)
+        client = mqtt.Client()
+        client.on_connect = on_connect
+        client.on_message = on_message
+        client.connect(MQTT_SERVER, 1883, 60)
         # Blocking call that processes network traffic, dispatches callbacks and
         # handles reconnecting.
         # Other loop*() functions are available that give a threaded interface and a
         # manual interface.
-        table01.loop_start()
-        table02.loop_start()
-        table03.loop_start()
-        table04.loop_start()
-        table05.loop_start()
-        table06.loop_start()
-        table07.loop_start()
-        table08.loop_start()
-        table09.loop_start()
-        table10.loop_start()
+        client.loop_start()
         socketio.run(app,host='0.0.0.0',port=80,debug=False)
     finally:
         print("cleaning up")

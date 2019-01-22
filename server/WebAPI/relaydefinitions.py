@@ -1,14 +1,14 @@
 relays = [
-    { 'id' : 1, 'name' : 'Table-01', 'state' : 'off'},
-    { 'id' : 2, 'name' : 'Table-02', 'state' : 'off'},
-    { 'id' : 3, 'name' : 'Table-03', 'state' : 'off'},
-    { 'id' : 4, 'name' : 'Table-04', 'state' : 'off'},
-    { 'id' : 5, 'name' : 'Table-05', 'state' : 'off'},
-    { 'id' : 6, 'name' : 'Table-06', 'state' : 'off'},
-    { 'id' : 7, 'name' : 'Table-07', 'state' : 'off'},
-    { 'id' : 8, 'name' : 'Table-08', 'state' : 'off'},
-    { 'id' : 9, 'name' : 'Table-09', 'state' : 'off'},
-    { 'id' : 10,'name' : 'Table-10', 'state' : 'off'}
+    { 'id' : 1, 'name' : 'A3', 'state' : 'off'},
+    { 'id' : 2, 'name' : 'A1', 'state' : 'off'},
+    { 'id' : 3, 'name' : 'A4', 'state' : 'off'},
+    { 'id' : 4, 'name' : 'A6', 'state' : 'off'},
+    { 'id' : 5, 'name' : 'C1', 'state' : 'off'},
+    { 'id' : 6, 'name' : 'C2', 'state' : 'off'},
+    { 'id' : 7, 'name' : 'C3', 'state' : 'off'},
+    { 'id' : 8, 'name' : 'V4', 'state' : 'off'},
+    { 'id' : 9, 'name' : 'V2', 'state' : 'off'},
+    { 'id' : 10,'name' : 'V1', 'state' : 'off'}
     ]
 
 relayIdToPin = {
