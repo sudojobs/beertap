@@ -1,15 +1,16 @@
 
-
 from flask import Flask, jsonify, abort, request, render_template
 from relaydefinitions import relays, relayIdToPin
 from gpiozero import LED
 from gpiozero.pins.pigpio import PiGPIOFactory
 from time import sleep
 import paho.mqtt.client as mqtt
+import configuration as cfg
 from flask_socketio import SocketIO
 from threading import Thread, Event
 import requests
 import json
+import os
 
 __author__ = '--'
 # defining the api-endpoint  
@@ -52,17 +53,33 @@ data = p.json()
 MQTT_PATH   =[ ("A4",0),("A6",0),("A1",0),("A3",0),("C1",0),("C2",0),("C3",0),("V1",0),("V2",0),("V4",0)]
 MQTT_SERVER= "localhost" 
 
-fa1 = PiGPIOFactory(host='192.168.1.116')
-fa4 = PiGPIOFactory(host='192.168.1.111')
-fa3 = PiGPIOFactory(host='192.168.1.107')
-fa6 = PiGPIOFactory(host='192.168.1.109')
-fc1 = PiGPIOFactory(host='192.168.1.110')
-fc2 = PiGPIOFactory(host='192.168.1.113')
-fc3 = PiGPIOFactory(host='192.168.1.103')
-fv4 = PiGPIOFactory(host='192.168.1.114')
-fv2 = PiGPIOFactory(host='192.168.1.117')
-fv1 = PiGPIOFactory(host='192.168.1.105')
+#fa1 = PiGPIOFactory(host='192.168.1.116')
+#fa4 = PiGPIOFactory(host='192.168.1.111')
+#fa3 = PiGPIOFactory(host='192.168.1.107')
+#fa6 = PiGPIOFactory(host='192.168.1.109')
+#fc1 = PiGPIOFactory(host='192.168.1.110')
+#fc2 = PiGPIOFactory(host='192.168.1.113')
+#fc3 = PiGPIOFactory(host='192.168.1.103')
+#fv1 = PiGPIOFactory(host='192.168.1.114')
+#fv2 = PiGPIOFactory(host='192.168.1.117')
+#fv4 = PiGPIOFactory(host='192.168.1.105')
 
+
+fa1 = PiGPIOFactory(host=cfg.A1ip)
+fa4 = PiGPIOFactory(host=cfg.A4ip)
+fa3 = PiGPIOFactory(host=cfg.A3ip)
+fa6 = PiGPIOFactory(host=cfg.A6ip)
+fc1 = PiGPIOFactory(host=cfg.C1ip)
+fc2 = PiGPIOFactory(host=cfg.C2ip)
+fc3 = PiGPIOFactory(host=cfg.C3ip)
+fv1 = PiGPIOFactory(host=cfg.V1ip)
+
+retv2 = os.system("ping -q -c2 192.168.1.117")
+if retv2 ==0:
+   fv2 = PiGPIOFactory(host=cfg.V2ip)
+   V2 = LED(24, pin_factory=fv2) 
+
+fv4 = PiGPIOFactory(host=cfg.V4ip)
 
 A1 = LED(24, pin_factory=fa1)
 A4 = LED(24, pin_factory=fa4)
@@ -73,7 +90,6 @@ C2 = LED(24, pin_factory=fc2)
 C3 = LED(24, pin_factory=fc3) 
 
 V4 = LED(24, pin_factory=fv4) 
-V2 = LED(24, pin_factory=fv2) 
 V1 = LED(24, pin_factory=fv1) 
 
 app = Flask(__name__)
@@ -84,57 +100,83 @@ app.config['DEBUG'] = True
 socketio = SocketIO(app)
 
 
-@socketio.on('connect', namespace='/t0test')
+@socketio.on('connect', namespace='/test')
 def test_connect():
-     print('Cient connected')
+    print('Cient connected')
 
-@socketio.on('disconnect', namespace='/t0test')
+@socketio.on('disconnect', namespace='/test')
 def test_disconnect():
-     print('Cient disconnected')
+    print('Cient disconnected')
 
 
-@socketio.on('connect', namespace='/t1test')
-def test_connect():
-     print('Cient connected')
+#@socketio.on('connect', namespace='/a1test')
+#def test_connect():
+#     print('Cient connected')
 
-@socketio.on('disconnect', namespace='/t1test')
-def test_disconnect():
-     print('Cient disconnected')
-
-
-@socketio.on('connect', namespace='/t2test')
-def test_connect():
-     print('Cient connected')
-
-@socketio.on('disconnect', namespace='/t2test')
-def test_disconnect():
-     print('Cient disconnected')
+#@socketio.on('disconnect', namespace='/a1test')
+#def test_disconnect():
+#     print('Cient disconnected')
 
 
-@socketio.on('connect', namespace='/t3test')
-def test_connect():
-     print('Cient connected')
+@socketio.on('connect', namespace='/a4test')
+def a4test_connect():
+    print('Cient connected')
 
-@socketio.on('disconnect', namespace='/t3test')
-def test_disconnect():
-     print('Cient disconnected')
+@socketio.on('disconnect', namespace='/a4test')
+def a4test_disconnect():
+    print('Cient disconnected')
 
 
-@app.route('/table01')
-def table01():
-    return render_template('table01.html')
 
-@app.route('/table02')
-def table02():
-    return render_template('table02.html')
+#@socketio.on('connect', namespace='/a6test')
+#def test_connect():
+#     print('Cient connected')
 
-@app.route('/table03')
-def table03():
-    return render_template('table03.html')
+#@socketio.on('disconnect', namespace='/a6test')
+#def test_disconnect():
+#     print('Cient disconnected')
 
-@app.route('/table04')
-def table04():
-    return render_template('table04.html')
+
+@app.route('/a3')
+def a3():
+    return render_template('a3.html')
+
+@app.route('/a1')
+def a1():
+    return render_template('a1.html')
+
+@app.route('/a4')
+def a4():
+    return render_template('a4.html')
+
+@app.route('/a6')
+def a6():
+    return render_template('a6.html')
+
+@app.route('/c1')
+def c1():
+    return render_template('c1.html')
+
+@app.route('/c2')
+def c2():
+    return render_template('c2.html')
+
+@app.route('/c3')
+def c3():
+    return render_template('c3.html')
+
+@app.route('/v1')
+def v1():
+    return render_template('v1.html')
+
+@app.route('/v2')
+def v2():
+    return render_template('v2.html')
+
+@app.route('/v4')
+def v4():
+    return render_template('v4.html')
+
 
 
 #GPIO.setmode(GPIO.BCM)
@@ -151,40 +193,40 @@ def Setup():
     #    GPIO.setup(relayIdToPin[relay['id']],GPIO.OUT)
     #    GPIO.output(relayIdToPin[relay['id']],relayStateToGPIOState[relay['state']])
 
-@socketio.on('connect', namespace='/t0test')
-def test_connect():
-     print('Cient connected')
+#@socketio.on('connect', namespace='/a3test')
+#def test_connect():
+#     print('Cient connected')
 
-@socketio.on('disconnect', namespace='/t0test')
-def test_disconnect():
-     print('Cient disconnected')
-
-
-@socketio.on('connect', namespace='/t1test')
-def test_connect():
-     print('Cient connected')
-
-@socketio.on('disconnect', namespace='/t1test')
-def test_disconnect():
-     print('Cient disconnected')
+#@socketio.on('disconnect', namespace='/a3test')
+#def test_disconnect():
+#     print('Cient disconnected')
 
 
-@socketio.on('connect', namespace='/t2test')
-def test_connect():
-     print('Cient connected')
+#@socketio.on('connect', namespace='/a1test')
+#def test_connect():
+#     print('Cient connected')
 
-@socketio.on('disconnect', namespace='/t2test')
-def test_disconnect():
-     print('Cient disconnected')
+#@socketio.on('disconnect', namespace='/a1test')
+#def test_disconnect():
+#     print('Cient disconnected')
 
 
-@socketio.on('connect', namespace='/t3test')
-def test_connect():
-     print('Cient connected')
+#@socketio.on('connect', namespace='/a4test')
+#def test_connect():
+#     print('Cient connected')
 
-@socketio.on('disconnect', namespace='/t3test')
-def test_disconnect():
-     print('Cient disconnected')
+#@socketio.on('disconnect', namespace='/a4test')
+#def test_disconnect():
+#     print('Cient disconnected')
+
+
+#@socketio.on('connect', namespace='/a6test')
+#def test_connect():
+#     print('Cient connected')
+
+#@socketio.on('disconnect', namespace='/a6test')
+#def test_disconnect():
+#     print('Cient disconnected')
 
 def UpdatePinFromRelayObject(relay):
     if(relay['id'] ==1):  
@@ -224,9 +266,9 @@ def UpdatePinFromRelayObject(relay):
           C3.off()
     elif(relay['id'] ==8):
        if(relay['state']=='on'): 
-          V4.on()
+          V1.on()
        else:
-          V4.off()
+          V1.off()
     elif(relay['id'] ==9):
        if(relay['state']=='on'): 
           V2.on()
@@ -234,9 +276,9 @@ def UpdatePinFromRelayObject(relay):
           V2.off()
     elif(relay['id'] ==10):
        if(relay['state']=='on'): 
-          V1.on()
+          V4.on()
        else:
-          V1.off()
+          V4.off()
 
     #GPIO.output(relayIdToPin[relay['id']],relayStateToGPIOState[relay['state']])
 
@@ -288,15 +330,37 @@ def on_message(client, userdata, msg):
     temp=b[1] 
     number2=temp[:-1]
     data = {'tap1': number1, 'tap2': number2}
-    print(data)
-    if(msg.topic=='A1'): 
-       socketio.emit('t01number', data, namespace='/t0test')
-    elif(msg.topic=='A3'):
-       socketio.emit('t02number', data, namespace='/t1test')
+    #print(data)
+    if(msg.topic=='A3'):
+       a3data=data 
+       socketio.emit('a3number', a3data, namespace='/a3test')
+    elif(msg.topic=='A1'):
+       a1data=data 
+       socketio.emit('a1number', a1data, namespace='/a1test')
     elif(msg.topic=='A4'):
-       socketio.emit('t03number', data, namespace='/t2test')
+       a4data=data 
+       socketio.emit('a4number', a4data, namespace='/a4test')
     elif(msg.topic=='A6'):
-       socketio.emit('t04number', data, namespace='/t3test')
+       a6data=data 
+       socketio.emit('newnumber', a6data, namespace='/test')
+    elif(msg.topic=='C1'):
+       c1data=data 
+       socketio.emit('c1number', c1data, namespace='/c1test')
+    elif(msg.topic=='C2'):
+       c2data=data 
+       socketio.emit('c2number', c2data, namespace='/c2test')
+    elif(msg.topic=='C3'):
+       c3data=data 
+       socketio.emit('c3number', c3data, namespace='/c3test')
+    elif(msg.topic=='V1'):
+       v1data=data 
+       socketio.emit('v1number', v1data, namespace='/v1test')
+    elif(msg.topic=='V2'):
+       v2data=data 
+       socketio.emit('v2number', v2data, namespace='/v2test')
+    elif(msg.topic=='V4'):
+       v4data=data 
+       socketio.emit('v4number', v4data, namespace='/v4test')
 
 
 if __name__ == "__main__":
