@@ -1,4 +1,3 @@
-
 from flask import Flask, jsonify, abort, request, render_template
 from relaydefinitions import relays, relayIdToPin
 from gpiozero import LED
@@ -63,9 +62,6 @@ def checkout(product_uid, quantity, remarks, table_ref_id):
         print(str(e))
         return("Error")
 
-
-
-
 MQTT_PATH   =[ ("A4",0),("A6",0),("A1",0),("A3",0),("C1",0),("C2",0),("C3",0),("V1",0),("V2",0),("V4",0)]
 MQTT_SERVER= "localhost" 
 
@@ -79,7 +75,6 @@ MQTT_SERVER= "localhost"
 #fv1 = PiGPIOFactory(host='192.168.1.114')
 #fv2 = PiGPIOFactory(host='192.168.1.117')
 #fv4 = PiGPIOFactory(host='192.168.1.105')
-
 
 fa1 = PiGPIOFactory(host=cfg.A1ip)
 fa4 = PiGPIOFactory(host=cfg.A4ip)
@@ -124,16 +119,6 @@ def test_connect():
 def test_disconnect():
     print('Cient disconnected')
 
-
-#@socketio.on('connect', namespace='/a1test')
-#def test_connect():
-#     print('Cient connected')
-
-#@socketio.on('disconnect', namespace='/a1test')
-#def test_disconnect():
-#     print('Cient disconnected')
-
-
 @socketio.on('connect', namespace='/a4test')
 def a4test_connect():
     print('Cient connected')
@@ -141,17 +126,6 @@ def a4test_connect():
 @socketio.on('disconnect', namespace='/a4test')
 def a4test_disconnect():
     print('Cient disconnected')
-
-
-
-#@socketio.on('connect', namespace='/a6test')
-#def test_connect():
-#     print('Cient connected')
-
-#@socketio.on('disconnect', namespace='/a6test')
-#def test_disconnect():
-#     print('Cient disconnected')
-
 
 @app.route('/a3')
 def a3():
@@ -193,110 +167,100 @@ def v2():
 def v4():
     return render_template('v4.html')
 
-
-
-#GPIO.setmode(GPIO.BCM)
-
-#relayStateToGPIOState = {
-#    'off' : GPIO.LOW,
-#    'on' : GPIO.HIGH
-#    }
-
 def Setup():
     print("Setup Complete") 
-
-#for relay in relays:
-    #    GPIO.setup(relayIdToPin[relay['id']],GPIO.OUT)
-    #    GPIO.output(relayIdToPin[relay['id']],relayStateToGPIOState[relay['state']])
-
-#@socketio.on('connect', namespace='/a3test')
-#def test_connect():
-#     print('Cient connected')
-
-#@socketio.on('disconnect', namespace='/a3test')
-#def test_disconnect():
-#     print('Cient disconnected')
-
-
-#@socketio.on('connect', namespace='/a1test')
-#def test_connect():
-#     print('Cient connected')
-
-#@socketio.on('disconnect', namespace='/a1test')
-#def test_disconnect():
-#     print('Cient disconnected')
-
-
-#@socketio.on('connect', namespace='/a4test')
-#def test_connect():
-#     print('Cient connected')
-
-#@socketio.on('disconnect', namespace='/a4test')
-#def test_disconnect():
-#     print('Cient disconnected')
-
-
-#@socketio.on('connect', namespace='/a6test')
-#def test_connect():
-#     print('Cient connected')
-
-#@socketio.on('disconnect', namespace='/a6test')
-#def test_disconnect():
-#     print('Cient disconnected')
 
 def UpdatePinFromRelayObject(relay):
     if(relay['id'] ==1):  
        if(relay['state']=='on'): 
           A3.on()
        else:
+          qty1=a3data['tap1'] 
+          qty2=a3data['tap2']
+          checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3)
+          checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3)
           A3.off()
     elif(relay['id'] ==2):
        if(relay['state']=='on'): 
           A1.on()
        else:
+          qty1=a1data['tap1'] 
+          qty2=a1data['tap2']
+          checkout(cfg.pid1,qty1,cfg.msg1A1,cfg.RefA1)
+          checkout(cfg.pid2,qty2,cfg.msg2A1,cfg.RefA1)
           A1.off()
     elif(relay['id'] ==3):
        if(relay['state']=='on'): 
           A4.on()
        else:
+          qty1=a4data['tap1'] 
+          qty2=a4data['tap2']
+          checkout(cfg.pid1,qty1,cfg.msg1A4,cfg.RefA4)
+          checkout(cfg.pid2,qty2,cfg.msg2A4,cfg.RefA4)
           A4.off()
     elif(relay['id'] ==4):
        if(relay['state']=='on'): 
           A6.on()
        else:
+          qty1=a6data['tap1'] 
+          qty2=a6data['tap2']
+          checkout(cfg.pid1,qty1,cfg.msg1A6,cfg.RefA6)
+          checkout(cfg.pid2,qty2,cfg.msg2A6,cfg.RefA6)
           A6.off()
     elif(relay['id'] ==5):
        if(relay['state']=='on'): 
           C1.on()
        else:
+          qty1=c1data['tap1'] 
+          qty2=c1data['tap2']
+          checkout(cfg.pid1,qty1,cfg.msg1C1,cfg.RefC1)
+          checkout(cfg.pid2,qty2,cfg.msg2C1,cfg.RefC1)
           C1.off()
     elif(relay['id'] ==6):
        if(relay['state']=='on'): 
           C2.on()
        else:
+          qty1=c2data['tap1'] 
+          qty2=c2data['tap2']
+          checkout(cfg.pid1,qty1,cfg.msg1C2,cfg.RefC2)
+          checkout(cfg.pid2,qty2,cfg.msg2C2,cfg.RefC2)
           C2.off()
     elif(relay['id'] ==7):
        if(relay['state']=='on'): 
           C3.on()
        else:
+          qty1=c3data['tap1'] 
+          qty2=c3data['tap2']
+          checkout(cfg.pid1,qty1,cfg.msg1C3,cfg.RefC3)
+          checkout(cfg.pid2,qty2,cfg.msg2C3,cfg.RefC3)
           C3.off()
     elif(relay['id'] ==8):
        if(relay['state']=='on'): 
           V1.on()
        else:
+          qty1=v1data['tap1'] 
+          qty2=v1data['tap2']
+          checkout(cfg.pid1,qty1,cfg.msg1V1,cfg.RefV1)
+          checkout(cfg.pid2,qty2,cfg.msg2V1,cfg.RefV1)
           V1.off()
     elif(relay['id'] ==9):
        if(relay['state']=='on'): 
           V2.on()
        else:
+          qty1=v2data['tap1'] 
+          qty2=v2data['tap2']
+          checkout(cfg.pid1,qty1,cfg.msg1V2,cfg.RefV2)
+          checkout(cfg.pid2,qty2,cfg.msg2V2,cfg.RefV2)
           V2.off()
     elif(relay['id'] ==10):
        if(relay['state']=='on'): 
           V4.on()
        else:
+          qty1=v4data['tap1'] 
+          qty2=v4data['tap2']
+          checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4)
+          checkout(cfg.pid2,qty2,cfg.msg2V4,cfg.RefV4)
           V4.off()
-
-    #GPIO.output(relayIdToPin[relay['id']],relayStateToGPIOState[relay['state']])
 
 @app.route('/WebRelay/', methods=['GET'])
 def index():
@@ -395,5 +359,3 @@ if __name__ == "__main__":
         socketio.run(app,host='0.0.0.0',port=80,debug=False)
     finally:
         print("cleaning up")
-        #GPIO.cleanup()
-
