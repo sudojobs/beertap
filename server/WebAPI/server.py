@@ -241,10 +241,30 @@ def UpdatePinFromRelayObject(relay):
        else:
           #qty1=v4data['tap1'] 
           #qty2=v4data['tap2']
-          #checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4)
-          #checkout(cfg.pid2,qty2,cfg.msg2V4,cfg.RefV4)
           V4.off()
           orderv4=1
+
+orderstarta1=0
+orderstarta3=0
+
+def UpdateOrder(relay):
+    if(relay['id'] ==1):  
+       if(relay['state']=='off'):
+          if orderstarta2==1:
+             checkout(cfg.pid1,47,cfg.msg1A3,cfg.RefA3)
+             checkout(cfg.pid2,43,cfg.msg2A3,cfg.RefA3)
+             orderstarta1=0
+       else:
+          orderstarta3=1
+    elif(relay['id'] ==2):
+       if(relay['state']=='off'): 
+          if orderstarta1==1:
+             checkout(cfg.pid1,47,cfg.msg1A1,cfg.RefA1)
+             checkout(cfg.pid2,43,cfg.msg2A1,cfg.RefA1)
+             orderstarta1=0
+       else:
+          orderstarta1=1
+
 
 @app.route('/WebRelay/', methods=['GET'])
 def index():
@@ -275,6 +295,7 @@ def update_relay(relay_id):
     relay = matchingRelays[0]
     relay['state']=request.json.get('state')
     UpdatePinFromRelayObject(relay)
+    UpdateOrder(relay)
     return jsonify({'relay': relay})
 
 def on_connect(client, userdata, flags, rc):
