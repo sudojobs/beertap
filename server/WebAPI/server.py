@@ -12,43 +12,59 @@ import requests
 import json
 import os
 
+
 __author__ = '--'
 # defining the api-endpoint  
 API_ENDPOINT = "https://dev-api.hk.eats365.net/o/oauth2/token"
 
-RestaurantName  ="BeerTap" 
-RestaurantCode  ="HK054042"
-APIClientID     ="d3c345808af848adb6c89a43a48e18be"
+RestaurantName = "BeerTap"
+RestaurantCode = "HK054042"
+APIClientID = "d3c345808af848adb6c89a43a48e18be"
+APIClientSecret = "66f7456893ca4dce855bfa481a68aa9fe3a42b04a95d4ee2bbb385096cecded0"
 
-APIClientSecret ="66f7456893ca4dce855bfa481a68aa9fe3a42b04a95d4ee2bbb385096cecded0"
+# data to be sent to api
+data = {'client_id': APIClientID,
+        'client_secret': APIClientSecret,
+        'grant_type': "client_credentials"}
 
-# data to be sent to api 
-data = {'client_id':APIClientID, 
-        'client_secret':APIClientSecret, 
-        'grant_type':"client_credentials"} 
-  
-# sending post request and saving response as response object 
-r = requests.post(url = API_ENDPOINT, data = data) 
+# sending post request and saving response as response object
+r = requests.post(url=API_ENDPOINT, data=data)
 
-accessdata=r.json()
-AccessToken= accessdata['access_token']
-TokenType= accessdata['token_type']
-#print AccessToken 
-#print TokenType
-# api-endpoint 
+# extracting response text
+pastebin_url = r.text
+
+accessdata = r.json()
+AccessToken = accessdata['access_token']
+TokenType = accessdata['token_type']
+# print AccessToken
+# print TokenType
+# api-endpoint
 URL = "https://dev-opi.hk.eats365.net/v1/menu/init"
-head= "Bearer %s" % AccessToken
+head = "Bearer %s" % AccessToken
+# print head
+# defining a params dict for the parameters to be sent to the API
+PARAMS = {'restaurant_code': RestaurantCode}
+HEADER = {'Authorization': head}
+
+def checkout(product_uid, quantity, remarks, table_ref_id):
+    url_checkout = "https://dev-opi.hk.eats365.net/v1/order/checkout"
+    data = {
+        'restaurant_code': "HK054042",
+        'order_mode': 'dine_in',
+        'cart_item_list': [{"product_uid": product_uid, "quantity": quantity, "remarks": remarks, 'modifier_list': []}],
+        'reference_type': "table",
+        'reference_id': table_ref_id
+    }
+    try:
+        p2 = requests.post(url=url_checkout, headers=HEADER, json=data)
+        data_checkout = p2.json()
+        return("Success")
+    except Exception as e:
+        print(str(e))
+        return("Error")
 
 
-PARAMS = { 'restaurant_code':RestaurantCode }
-HEADER = { 'Authorization':head } 
-### sending get request and saving the response as response object 
-p = requests.get(url = URL, headers=HEADER, params = PARAMS) 
-### extracting data in json format 
-data = p.json()
-#print data
-#ProductID=data["restaurant_list"]
-#print(json.dumps(ProductID, indent=4, separators=(". ", " = ")))
+
 
 MQTT_PATH   =[ ("A4",0),("A6",0),("A1",0),("A3",0),("C1",0),("C2",0),("C3",0),("V1",0),("V2",0),("V4",0)]
 MQTT_SERVER= "localhost" 
