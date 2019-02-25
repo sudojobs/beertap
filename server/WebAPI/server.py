@@ -341,5 +341,6 @@ if __name__ == "__main__":
         # manual interface.
         client.loop_start()
         socketio.run(app,host='0.0.0.0',port=80,debug=False)
+        print("Shobhit")
     finally:
         print("cleaning up")
