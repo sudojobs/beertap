@@ -186,7 +186,7 @@ def UpdatePinFromRelayObject(relay):
           ordera1=0
        else:
           A1.off()
-          ordera1==1:
+          ordera1=1
     elif(relay['id'] ==3):
        if(relay['state']=='on'): 
           A4.on()
