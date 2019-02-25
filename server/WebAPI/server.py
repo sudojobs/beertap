@@ -183,12 +183,15 @@ def UpdatePinFromRelayObject(relay):
     elif(relay['id'] ==2):
        if(relay['state']=='on'): 
           A1.on()
+          ordera1=1
        else:
-          #qty1=a1data['tap1'] 
-          #qty2=a1data['tap2']
-          #checkout(cfg.pid1,qty1,cfg.msg1A1,cfg.RefA1)
-          #checkout(cfg.pid2,qty2,cfg.msg2A1,cfg.RefA1)
           A1.off()
+          if ordera1==1:
+             qty1=a1data['tap1'] 
+             qty2=a1data['tap2']
+             checkout(cfg.pid1,qty1,cfg.msg1A1,cfg.RefA1)
+             checkout(cfg.pid2,qty2,cfg.msg2A1,cfg.RefA1)
+          ordera1=0
     elif(relay['id'] ==3):
        if(relay['state']=='on'): 
           A4.on()
