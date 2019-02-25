@@ -300,12 +300,12 @@ def on_message(client, userdata, msg):
        socketio.emit('a3number', a3data, namespace='/a3test')
     elif(msg.topic=='A1'):
        a1data=data
-       if ordera1==1:
-          qty1=a1data['tap1'] 
-          qty2=a1data['tap2']
-          checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4)
-          checkout(cfg.pid2,qty2,cfg.msg2V4,cfg.RefV4)
-          ordera1=0 
+       #if ordera1==1:
+       #   qty1=a1data['tap1'] 
+       #   qty2=a1data['tap2']
+       #   checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4)
+       #   checkout(cfg.pid2,qty2,cfg.msg2V4,cfg.RefV4)
+       #   ordera1=0 
        socketio.emit('a1number', a1data, namespace='/a1test')
     elif(msg.topic=='A4'):
        a4data=data 
