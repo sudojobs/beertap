@@ -175,91 +175,91 @@ def UpdatePinFromRelayObject(relay):
        if(relay['state']=='on'): 
           A3.on()
        else:
-          qty1=a3data['tap1'] 
-          qty2=a3data['tap2']
-          checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3)
-          checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3)
+          #qty1=a3data['tap1'] 
+          #qty2=a3data['tap2']
+          #checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3)
+          #checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3)
           A3.off()
     elif(relay['id'] ==2):
        if(relay['state']=='on'): 
           A1.on()
        else:
-          qty1=a1data['tap1'] 
-          qty2=a1data['tap2']
-          checkout(cfg.pid1,qty1,cfg.msg1A1,cfg.RefA1)
-          checkout(cfg.pid2,qty2,cfg.msg2A1,cfg.RefA1)
+          #qty1=a1data['tap1'] 
+          #qty2=a1data['tap2']
+          #checkout(cfg.pid1,qty1,cfg.msg1A1,cfg.RefA1)
+          #checkout(cfg.pid2,qty2,cfg.msg2A1,cfg.RefA1)
           A1.off()
     elif(relay['id'] ==3):
        if(relay['state']=='on'): 
           A4.on()
        else:
-          qty1=a4data['tap1'] 
-          qty2=a4data['tap2']
-          checkout(cfg.pid1,qty1,cfg.msg1A4,cfg.RefA4)
-          checkout(cfg.pid2,qty2,cfg.msg2A4,cfg.RefA4)
+          #qty1=a4data['tap1'] 
+          #qty2=a4data['tap2']
+          #checkout(cfg.pid1,qty1,cfg.msg1A4,cfg.RefA4)
+          #checkout(cfg.pid2,qty2,cfg.msg2A4,cfg.RefA4)
           A4.off()
     elif(relay['id'] ==4):
        if(relay['state']=='on'): 
           A6.on()
        else:
-          qty1=a6data['tap1'] 
-          qty2=a6data['tap2']
-          checkout(cfg.pid1,qty1,cfg.msg1A6,cfg.RefA6)
-          checkout(cfg.pid2,qty2,cfg.msg2A6,cfg.RefA6)
+          #qty1=a6data['tap1'] 
+          #qty2=a6data['tap2']
+          #checkout(cfg.pid1,qty1,cfg.msg1A6,cfg.RefA6)
+          #checkout(cfg.pid2,qty2,cfg.msg2A6,cfg.RefA6)
           A6.off()
     elif(relay['id'] ==5):
        if(relay['state']=='on'): 
           C1.on()
        else:
-          qty1=c1data['tap1'] 
-          qty2=c1data['tap2']
-          checkout(cfg.pid1,qty1,cfg.msg1C1,cfg.RefC1)
-          checkout(cfg.pid2,qty2,cfg.msg2C1,cfg.RefC1)
+          #qty1=c1data['tap1'] 
+          #qty2=c1data['tap2']
+          #checkout(cfg.pid1,qty1,cfg.msg1C1,cfg.RefC1)
+          #checkout(cfg.pid2,qty2,cfg.msg2C1,cfg.RefC1)
           C1.off()
     elif(relay['id'] ==6):
        if(relay['state']=='on'): 
           C2.on()
        else:
-          qty1=c2data['tap1'] 
-          qty2=c2data['tap2']
-          checkout(cfg.pid1,qty1,cfg.msg1C2,cfg.RefC2)
-          checkout(cfg.pid2,qty2,cfg.msg2C2,cfg.RefC2)
+          #qty1=c2data['tap1'] 
+          #qty2=c2data['tap2']
+          #checkout(cfg.pid1,qty1,cfg.msg1C2,cfg.RefC2)
+          #checkout(cfg.pid2,qty2,cfg.msg2C2,cfg.RefC2)
           C2.off()
     elif(relay['id'] ==7):
        if(relay['state']=='on'): 
           C3.on()
        else:
-          qty1=c3data['tap1'] 
-          qty2=c3data['tap2']
-          checkout(cfg.pid1,qty1,cfg.msg1C3,cfg.RefC3)
-          checkout(cfg.pid2,qty2,cfg.msg2C3,cfg.RefC3)
+          #qty1=c3data['tap1'] 
+          #qty2=c3data['tap2']
+          #checkout(cfg.pid1,qty1,cfg.msg1C3,cfg.RefC3)
+          #checkout(cfg.pid2,qty2,cfg.msg2C3,cfg.RefC3)
           C3.off()
     elif(relay['id'] ==8):
        if(relay['state']=='on'): 
           V1.on()
        else:
-          qty1=v1data['tap1'] 
-          qty2=v1data['tap2']
-          checkout(cfg.pid1,qty1,cfg.msg1V1,cfg.RefV1)
-          checkout(cfg.pid2,qty2,cfg.msg2V1,cfg.RefV1)
+          #qty1=v1data['tap1'] 
+          #qty2=v1data['tap2']
+          #checkout(cfg.pid1,qty1,cfg.msg1V1,cfg.RefV1)
+          #checkout(cfg.pid2,qty2,cfg.msg2V1,cfg.RefV1)
           V1.off()
     elif(relay['id'] ==9):
        if(relay['state']=='on'): 
           V2.on()
        else:
-          qty1=v2data['tap1'] 
-          qty2=v2data['tap2']
-          checkout(cfg.pid1,qty1,cfg.msg1V2,cfg.RefV2)
-          checkout(cfg.pid2,qty2,cfg.msg2V2,cfg.RefV2)
+          #qty1=v2data['tap1'] 
+          #qty2=v2data['tap2']
+          #checkout(cfg.pid1,qty1,cfg.msg1V2,cfg.RefV2)
+          #checkout(cfg.pid2,qty2,cfg.msg2V2,cfg.RefV2)
           V2.off()
     elif(relay['id'] ==10):
        if(relay['state']=='on'): 
           V4.on()
        else:
-          qty1=v4data['tap1'] 
-          qty2=v4data['tap2']
-          checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4)
-          checkout(cfg.pid2,qty2,cfg.msg2V4,cfg.RefV4)
+          #qty1=v4data['tap1'] 
+          #qty2=v4data['tap2']
+          #checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4)
+          #checkout(cfg.pid2,qty2,cfg.msg2V4,cfg.RefV4)
           V4.off()
 
 @app.route('/WebRelay/', methods=['GET'])
