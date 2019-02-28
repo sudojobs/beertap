@@ -295,18 +295,18 @@ def update_relay(relay_id):
     relay = matchingRelays[0]
     relay['state']=request.json.get('state')
     UpdatePinFromRelayObject(relay)
-    UpdateOrder(relay)
+    #UpdateOrder(relay)
     return jsonify({'relay': relay})
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+    #print("Connected with result code "+str(rc))
   # Subscribing in on_connect() means that if we lose the connection and
   # reconnect then subscriptions will be renewed.
     client.subscribe(MQTT_PATH)
 
   # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    print("%s %s" % (msg.topic,msg.payload))
+    #print("%s %s" % (msg.topic,msg.payload))
     status=str(msg.payload.decode('utf-8','ignore'))
     sup=status.split(",")
     a=sup[0].split(":")
@@ -349,7 +349,7 @@ def on_message(client, userdata, msg):
 
 
 if __name__ == "__main__":
-    print("starting...")
+    #print("starting...")
     try:
         Setup()
         client = mqtt.Client()
@@ -362,5 +362,8 @@ if __name__ == "__main__":
         # manual interface.
         client.loop_start()
         socketio.run(app,host='0.0.0.0',port=80,debug=False)
+
+        while 1:
+            print("Shobhit")
     finally:
         print("cleaning up")
