@@ -257,21 +257,6 @@ def UpdatePinFromRelayObject(relay):
           V4.off()
           orderv4=1
 
-             checkout(cfg.pid1,47,cfg.msg1A3,cfg.RefA3)
-             checkout(cfg.pid2,43,cfg.msg2A3,cfg.RefA3)
-             orderstarta1=0
-       else:
-          orderstarta3=1
-    elif(relay['id'] ==2):
-       if(relay['state']=='off'): 
-          if orderstarta1==1:
-             checkout(cfg.pid1,47,cfg.msg1A1,cfg.RefA1)
-             checkout(cfg.pid2,43,cfg.msg2A1,cfg.RefA1)
-             orderstarta1=0
-       else:
-          orderstarta1=1
-
-
 @app.route('/WebRelay/', methods=['GET'])
 def index():
     return render_template('Index.html');
