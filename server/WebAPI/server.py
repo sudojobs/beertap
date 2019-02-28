@@ -10,7 +10,7 @@ from threading import Thread, Event
 import requests
 import json
 import os
-
+import threading
 
 __author__ = '--'
 # defining the api-endpoint  
@@ -44,6 +44,12 @@ head = "Bearer %s" % AccessToken
 # defining a params dict for the parameters to be sent to the API
 PARAMS = {'restaurant_code': RestaurantCode}
 HEADER = {'Authorization': head}
+
+def print_square(num): 
+    """ 
+    function to print square of given num 
+    """
+    print("Square: {}".format(num * num))
 
 def checkout(product_uid, quantity, remarks, table_ref_id):
     url_checkout = "https://dev-opi.hk.eats365.net/v1/order/checkout"
@@ -352,6 +358,8 @@ if __name__ == "__main__":
     #print("starting...")
     try:
         Setup()
+        t1 = threading.Thread(target=print_square, args=(10,))
+        t1.start()
         client = mqtt.Client()
         client.on_connect = on_connect
         client.on_message = on_message
@@ -362,8 +370,5 @@ if __name__ == "__main__":
         # manual interface.
         client.loop_start()
         socketio.run(app,host='0.0.0.0',port=80,debug=False)
-
-        while 1:
-            print("Shobhit")
     finally:
         print("cleaning up")
