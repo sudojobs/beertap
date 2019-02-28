@@ -46,10 +46,17 @@ PARAMS = {'restaurant_code': RestaurantCode}
 HEADER = {'Authorization': head}
 
 def print_square(num): 
-    """ 
-    function to print square of given num 
-    """
-    print("Square: {}".format(num * num))
+    while True:
+          print("ORDERA3")
+          print(ordera3)
+          print("ORDERA1")
+          print(ordera1)
+          print("ORDERA4")
+          print(ordera4)
+          print("ORDERA6")
+          print(ordera6)
+          time.sleep(0.5)   
+    
 
 def checkout(product_uid, quantity, remarks, table_ref_id):
     url_checkout = "https://dev-opi.hk.eats365.net/v1/order/checkout"
@@ -250,13 +257,6 @@ def UpdatePinFromRelayObject(relay):
           V4.off()
           orderv4=1
 
-orderstarta1=0
-orderstarta3=0
-
-def UpdateOrder(relay):
-    if(relay['id'] ==1):  
-       if(relay['state']=='off'):
-          if orderstarta2==1:
              checkout(cfg.pid1,47,cfg.msg1A3,cfg.RefA3)
              checkout(cfg.pid2,43,cfg.msg2A3,cfg.RefA3)
              orderstarta1=0
@@ -301,7 +301,6 @@ def update_relay(relay_id):
     relay = matchingRelays[0]
     relay['state']=request.json.get('state')
     UpdatePinFromRelayObject(relay)
-    #UpdateOrder(relay)
     return jsonify({'relay': relay})
 
 def on_connect(client, userdata, flags, rc):
