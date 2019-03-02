@@ -10,7 +10,11 @@ from threading import Thread, Event
 import requests
 import json
 import os
-import threading
+import sqlite3 
+
+
+conn = sqlite3.connect('checkout.db')
+print "Opened database successfully";
 
 __author__ = '--'
 # defining the api-endpoint  
@@ -44,19 +48,6 @@ head = "Bearer %s" % AccessToken
 # defining a params dict for the parameters to be sent to the API
 PARAMS = {'restaurant_code': RestaurantCode}
 HEADER = {'Authorization': head}
-
-def print_square(num): 
-    while True:
-          print("ORDERA3")
-          print(ordera3)
-          print("ORDERA1")
-          print(ordera1)
-          print("ORDERA4")
-          print(ordera4)
-          print("ORDERA6")
-          print(ordera6)
-          time.sleep(0.5)   
-    
 
 def checkout(product_uid, quantity, remarks, table_ref_id):
     url_checkout = "https://dev-opi.hk.eats365.net/v1/order/checkout"
@@ -257,6 +248,28 @@ def UpdatePinFromRelayObject(relay):
           V4.off()
           orderv4=1
 
+orderstarta1=0
+orderstarta3=0
+
+def UpdateOrder(relay):
+    if(relay['id'] ==1):  
+       if(relay['state']=='off'):
+          if orderstarta2==1:
+             checkout(cfg.pid1,47,cfg.msg1A3,cfg.RefA3)
+             checkout(cfg.pid2,43,cfg.msg2A3,cfg.RefA3)
+             orderstarta1=0
+       else:
+          orderstarta3=1
+    elif(relay['id'] ==2):
+       if(relay['state']=='off'): 
+          if orderstarta1==1:
+             checkout(cfg.pid1,47,cfg.msg1A1,cfg.RefA1)
+             checkout(cfg.pid2,43,cfg.msg2A1,cfg.RefA1)
+             orderstarta1=0
+       else:
+          orderstarta1=1
+
+
 @app.route('/WebRelay/', methods=['GET'])
 def index():
     return render_template('Index.html');
@@ -286,17 +299,18 @@ def update_relay(relay_id):
     relay = matchingRelays[0]
     relay['state']=request.json.get('state')
     UpdatePinFromRelayObject(relay)
+    #UpdateOrder(relay)
     return jsonify({'relay': relay})
 
 def on_connect(client, userdata, flags, rc):
-    #print("Connected with result code "+str(rc))
+    print("Connected with result code "+str(rc))
   # Subscribing in on_connect() means that if we lose the connection and
   # reconnect then subscriptions will be renewed.
     client.subscribe(MQTT_PATH)
 
   # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    #print("%s %s" % (msg.topic,msg.payload))
+    print("%s %s" % (msg.topic,msg.payload))
     status=str(msg.payload.decode('utf-8','ignore'))
     sup=status.split(",")
     a=sup[0].split(":")
@@ -339,11 +353,9 @@ def on_message(client, userdata, msg):
 
 
 if __name__ == "__main__":
-    #print("starting...")
+    print("starting...")
     try:
         Setup()
-        t1 = threading.Thread(target=print_square, args=(10,))
-        t1.start()
         client = mqtt.Client()
         client.on_connect = on_connect
         client.on_message = on_message
