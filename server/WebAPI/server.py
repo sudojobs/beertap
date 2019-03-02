@@ -49,8 +49,6 @@ head = "Bearer %s" % AccessToken
 PARAMS = {'restaurant_code': RestaurantCode}
 HEADER = {'Authorization': head}
 
-def updatedb(table,number1,number2):
-  
 def checkout(product_uid, quantity, remarks, table_ref_id):
     url_checkout = "https://dev-opi.hk.eats365.net/v1/order/checkout"
     data = {
