@@ -466,7 +466,7 @@ def on_message(client, userdata, msg):
        socketio.emit('a3number', a3data, namespace='/a3test')
        if flag==0:
           type(number1)
-           flag=1
+          flag=1
        if (number1 != '0' or number2 !='0'):
            print(number1)
            print(number2)
