@@ -30,7 +30,7 @@ def updatedb(number1,number2):
     print("I am in update")
     conn = sqlite3.connect('checkout.db')
     conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3' ",(number1,))
-    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3' ",(number2,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3' ",(number2,))
     conn.commit()
     conn.exit()
 
