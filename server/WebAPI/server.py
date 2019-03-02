@@ -464,28 +464,31 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
-       if (number1 > 0 or number2 >0):
+       if flag==0:
+          type(number1)
+           flag=1
+       if (number1 != '0' or number2 !='0'):
            print(number1)
            print(number2)
            updatedba3(number1,number2)
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
-       if (number1 > 0 or number2 > 0):
+       if (number1 != '0' or number2 !='0'):
            print(number1)
            print(number2)
            updatedba1(number1,number2)
     elif(msg.topic=='A4'):
        a4data=data 
        socketio.emit('a4number', a4data, namespace='/a4test')
-       if (number1 > 0 or number2 > 0):
+       if (number1 != '0' or number2 !='0'):
            print(number1)
            print(number2)
            updatedba4(number1,number2)
     elif(msg.topic=='A6'):
        a6data=data 
        socketio.emit('newnumber', a6data, namespace='/test')
-       if (number1 > 0 or number2 > 0):
+       if (number1 != '0' or number2 !='0'):
            print(number1)
            print(number2)
            updatedba6(number1,number2)
