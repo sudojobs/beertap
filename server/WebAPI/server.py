@@ -51,6 +51,7 @@ HEADER = {'Authorization': head}
 
 def updatedb(table,number1,number2):
        conn = sqlite3.connect('checkout.db')
+       print("Table1 :%d  Table2 : %d  Table : %s" % (number1 , number2, table))
        conn.execute("UPDATE checkout set tap1 = ?  where ID = ?",(number1,table,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = ?",(number2,table,))
        conn.commit()
