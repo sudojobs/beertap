@@ -15,7 +15,6 @@ import sqlite3
 
 logging.basicConfig(filename='beertap.log',level=logging.DEBUG)
 
-conn = sqlite3.connect('checkout.db')
 
 __author__ = '--'
 # defining the api-endpoint  
@@ -50,6 +49,13 @@ head = "Bearer %s" % AccessToken
 PARAMS = {'restaurant_code': RestaurantCode}
 HEADER = {'Authorization': head}
 
+def updatedb(table,number1,number2):
+       conn = sqlite3.connect('checkout.db')
+       conn.execute("UPDATE checkout set tap1 = ?  where ID = ?",(number1,table,))
+       conn.execute("UPDATE checkout set tap2 = ?  where ID = ?",(number2,table,))
+       conn.commit()
+       conn.exit()
+  
 def checkout(product_uid, quantity, remarks, table_ref_id):
     url_checkout = "https://dev-opi.hk.eats365.net/v1/order/checkout"
     data = {
@@ -432,29 +438,25 @@ def on_message(client, userdata, msg):
     data = {'tap1': number1, 'tap2': number2}
     #print(data)
     if(msg.topic=='A3'):
-       a3data=data 
+       a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3'",(number2,))
-       conn.commit()
+       t1 = threading.Thread(target=updatedb, args=('A3',number1,number2,))  
+       t1.start()
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A1'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A1'",(number2,))
-       conn.commit()
+       t2 = threading.Thread(target=updatedb, args=('A1',number1,number2,))  
+       t2.start()
     elif(msg.topic=='A4'):
        a4data=data 
        socketio.emit('a4number', a4data, namespace='/a4test')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A4'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A4'",(number2,))
-       conn.commit()
+       t3 = threading.Thread(target=updatedb, args=('A4',number1,number2,))  
+       t3.start()
     elif(msg.topic=='A6'):
        a6data=data 
        socketio.emit('newnumber', a6data, namespace='/test')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A6'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A6'",(number2,))
-       conn.commit()
+       t4 = threading.Thread(target=updatedb, args=('A6',number1,number2,))  
+       t4.start()
     elif(msg.topic=='C1'):
        c1data=data 
        socketio.emit('c1number', c1data, namespace='/c1test')
