@@ -15,6 +15,8 @@ import sqlite3
 
 logging.basicConfig(filename='beertap.log',level=logging.DEBUG)
 
+conn = sqlite3.connect('checkout.db')
+
 __author__ = '--'
 # defining the api-endpoint  
 API_ENDPOINT = "https://dev-api.hk.eats365.net/o/oauth2/token"
@@ -165,11 +167,11 @@ def Setup():
     print("Setup Complete") 
 
 def order_placed(relay):
-    conn = sqlite3.connect('checkout.db')
     if(relay['state']=='off'):
        if(relay['id']== 1):
           print("Order Checkout A3")
-          cursor = conn.execute("SELECT *  from checkout where ID ='A3'")
+          connc = sqlite3.connect('checkout.db')
+          cursor = connc.execute("SELECT *  from checkout where ID ='A3'")
           rows =cursor.fetchall()
           for row in rows:
               print(row[1])
@@ -178,12 +180,14 @@ def order_placed(relay):
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
           checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
-          conn.execute("update checkout set tap1 =0  where id = 'A3'")
-          conn.execute("update checkout set tap2 =0  where id = 'A3'")
-          conn.commit()
+          connc.execute("update checkout set tap1 =0  where id = 'A3'")
+          connc.execute("update checkout set tap2 =0  where id = 'A3'")
+          connc.commit()
+          connc.close()  
        elif(relay['id']==2):
           print("Order Checkout A1")
-          cursor = conn.execute("SELECT *  from checkout where ID ='A1'")
+          connc = sqlite3.connect('checkout.db')
+          cursor = connc.execute("SELECT *  from checkout where ID ='A1'")
           rows =cursor.fetchall()
           for row in rows:
               print(row[1])
@@ -192,12 +196,14 @@ def order_placed(relay):
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1A1,cfg.RefA1) 
           checkout(cfg.pid2,qty2,cfg.msg2A1,cfg.RefA1) 
-          conn.execute("update checkout set tap1 =0  where id = 'A1'")
-          conn.execute("update checkout set tap2 =0  where id = 'A1'")
-          conn.commit()
+          connc.execute("update checkout set tap1 =0  where id = 'A1'")
+          connc.execute("update checkout set tap2 =0  where id = 'A1'")
+          connc.commit()
+          connc.close()  
        elif(relay['id']==3):
           print("Order Checkout A4")
-          cursor = conn.execute("SELECT *  from checkout where ID ='A4'")
+          connc = sqlite3.connect('checkout.db')
+          cursor = connc.execute("SELECT *  from checkout where ID ='A4'")
           rows =cursor.fetchall()
           for row in rows:
               print(row[1])
@@ -206,12 +212,14 @@ def order_placed(relay):
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1A4,cfg.RefA4) 
           checkout(cfg.pid2,qty2,cfg.msg2A4,cfg.RefA4) 
-          conn.execute("update checkout set tap1 =0  where id = 'A4'")
-          conn.execute("update checkout set tap2 =0  where id = 'A4'")
-          conn.commit()
+          connc.execute("update checkout set tap1 =0  where id = 'A4'")
+          connc.execute("update checkout set tap2 =0  where id = 'A4'")
+          connc.commit()
+          connc.close()  
        elif(relay['id']==4):
           print("Order Checkout A6")
-          cursor = conn.execute("SELECT *  from checkout where ID ='A6'")
+          connc = sqlite3.connect('checkout.db')
+          cursor = connc.execute("SELECT *  from checkout where ID ='A6'")
           rows =cursor.fetchall()
           for row in rows:
               print(row[1])
@@ -220,12 +228,14 @@ def order_placed(relay):
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1A6,cfg.RefA6) 
           checkout(cfg.pid2,qty2,cfg.msg2A6,cfg.RefA6) 
-          conn.execute("update checkout set tap1 =0  where id = 'A6'")
-          conn.execute("update checkout set tap2 =0  where id = 'A6'")
-          conn.commit()
+          connc.execute("update checkout set tap1 =0  where id = 'A6'")
+          connc.execute("update checkout set tap2 =0  where id = 'A6'")
+          connc.commit()
+          connc.close()  
        elif(relay['id']==5):
           print("Order Checkout C1")
-          cursor = conn.execute("SELECT *  from checkout where ID ='C1'")
+          connc = sqlite3.connect('checkout.db')
+          cursor = connc.execute("SELECT *  from checkout where ID ='C1'")
           rows =cursor.fetchall()
           for row in rows:
               print(row[1])
@@ -234,12 +244,14 @@ def order_placed(relay):
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1C1,cfg.RefC1) 
           checkout(cfg.pid2,qty2,cfg.msg2C1,cfg.RefC1) 
-          conn.execute("update checkout set tap1 =0  where id = 'C1'")
-          conn.execute("update checkout set tap2 =0  where id = 'C1'")
-          conn.commit()
+          connc.execute("update checkout set tap1 =0  where id = 'C1'")
+          connc.execute("update checkout set tap2 =0  where id = 'C1'")
+          connc.commit()
+          connc.close()  
        elif(relay['id']==6):
           print("Order Checkout C2")
-          cursor = conn.execute("SELECT *  from checkout where ID ='C2'")
+          connc = sqlite3.connect('checkout.db')
+          cursor = connc.execute("SELECT *  from checkout where ID ='C2'")
           rows =cursor.fetchall()
           for row in rows:
               print(row[1])
@@ -248,12 +260,14 @@ def order_placed(relay):
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1C2,cfg.RefC2) 
           checkout(cfg.pid2,qty2,cfg.msg2C2,cfg.RefC2) 
-          conn.execute("update checkout set tap1 =0  where id = 'C2'")
-          conn.execute("update checkout set tap2 =0  where id = 'C2'")
-          conn.commit()
+          connc.execute("update checkout set tap1 =0  where id = 'C2'")
+          connc.execute("update checkout set tap2 =0  where id = 'C2'")
+          connc.commit()
+          connc.close()  
        elif(relay['id']==7):
           print("Order Checkout C3")
-          cursor = conn.execute("SELECT *  from checkout where ID ='C3'")
+          connc = sqlite3.connect('checkout.db')
+          cursor = connc.execute("SELECT *  from checkout where ID ='C3'")
           rows =cursor.fetchall()
           for row in rows:
               print(row[1])
@@ -262,12 +276,14 @@ def order_placed(relay):
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1C3,cfg.RefC3) 
           checkout(cfg.pid2,qty2,cfg.msg2C3,cfg.RefC3) 
-          conn.execute("update checkout set tap1 =0  where id = 'C3'")
-          conn.execute("update checkout set tap2 =0  where id = 'C3'")
-          conn.commit()
+          connc.execute("update checkout set tap1 =0  where id = 'C3'")
+          connc.execute("update checkout set tap2 =0  where id = 'C3'")
+          connc.commit()
+          connc.close()  
        elif(relay['id']==8):
           print("Order Checkout V4")
-          cursor = conn.execute("SELECT *  from checkout where ID ='V4'")
+          connc = sqlite3.connect('checkout.db')
+          cursor = connc.execute("SELECT *  from checkout where ID ='V4'")
           rows =cursor.fetchall()
           for row in rows:
               print(row[1])
@@ -279,8 +295,10 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'V4'")
           conn.execute("update checkout set tap2 =0  where id = 'V4'")
           conn.commit()
+          connc.close()  
        elif(relay['id']==9):
           print("Order Checkout V1")
+          connc = sqlite3.connect('checkout.db')
           cursor = conn.execute("SELECT *  from checkout where ID ='V1'")
           rows =cursor.fetchall()
           for row in rows:
@@ -293,8 +311,10 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'V1'")
           conn.execute("update checkout set tap2 =0  where id = 'V1'")
           conn.commit()
+          connc.close()  
        elif(relay['id']==10):
           print("Order Checkout V2")
+          connc = sqlite3.connect('checkout.db')
           cursor = conn.execute("SELECT *  from checkout where ID ='V2'")
           rows =cursor.fetchall()
           for row in rows:
@@ -307,7 +327,7 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'V2'")
           conn.execute("update checkout set tap2 =0  where id = 'V2'")
           conn.commit()
-       conn.close()  
+          connc.close()  
 
 def UpdatePinFromRelayObject(relay):
     if(relay['id'] ==1):  
@@ -402,7 +422,6 @@ def on_connect(client, userdata, flags, rc):
   # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     #print("%s %s" % (msg.topic,msg.payload))
-    conn = sqlite3.connect('checkout.db')
     status=str(msg.payload.decode('utf-8','ignore'))
     sup=status.split(",")
     a=sup[0].split(":")
@@ -415,8 +434,6 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data 
        socketio.emit('a3number', a3data, namespace='/a3test')
-       print(number1)
-       print(number2)
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3'",(number2,))
        conn.commit()
