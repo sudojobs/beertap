@@ -50,12 +50,6 @@ PARAMS = {'restaurant_code': RestaurantCode}
 HEADER = {'Authorization': head}
 
 def updatedb(table,number1,number2):
-       conn = sqlite3.connect('checkout.db')
-       print("Table1 :%d  Table2 : %d  Table : %s" % (number1 , number2, table))
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = ?",(number1,table,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = ?",(number2,table,))
-       conn.commit()
-       conn.exit()
   
 def checkout(product_uid, quantity, remarks, table_ref_id):
     url_checkout = "https://dev-opi.hk.eats365.net/v1/order/checkout"
@@ -441,8 +435,11 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
-       t1 = threading.Thread(target=updatedb, args=('A3',number1,number2,))  
-       t1.start()
+       conn = sqlite3.connect('checkout.db')
+       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3'",(number1,))
+       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3'",(number2,))
+       conn.commit()
+       conn.exit()
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
