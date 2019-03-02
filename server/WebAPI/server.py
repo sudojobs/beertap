@@ -27,7 +27,7 @@ APIClientSecret = "66f7456893ca4dce855bfa481a68aa9fe3a42b04a95d4ee2bbb385096cecd
 
 
 def updatedb(tap,number,table):
-    print (tap : %s number : %d table : %s)   %  ( tap,number , table)
+    print ("tap : %s number : %d table : %s")   %  ( tap,number , table)
     conn = sqlite3.connect('checkout.db')
     conn.execute("UPDATE checkout set ? = ?  where ID = ? ",(tap,number1,table,))
     conn.commit()
