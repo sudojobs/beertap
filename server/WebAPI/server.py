@@ -54,8 +54,49 @@ def updatedba6(number1,number2):
     conn.commit()
     conn.exit()
 
+def updatedbc1(number1,number2):
+    conn = sqlite3.connect('checkout.db')
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C1' ",(number1,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C1' ",(number2,))
+    conn.commit()
+    conn.exit()
 
-    
+def updatedbc2(number1,number2):
+    conn = sqlite3.connect('checkout.db')
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C2' ",(number1,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C2' ",(number2,))
+    conn.commit()
+    conn.exit()
+
+def updatedbc3(number1,number2):
+    conn = sqlite3.connect('checkout.db')
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C3' ",(number1,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C3' ",(number2,))
+    conn.commit()
+    conn.exit()
+
+def updatedbv4(number1,number2):
+    conn = sqlite3.connect('checkout.db')
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V4' ",(number1,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V4' ",(number2,))
+    conn.commit()
+    conn.exit()
+
+def updatedbv1(number1,number2):
+    conn = sqlite3.connect('checkout.db')
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V1' ",(number1,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V1' ",(number2,))
+    conn.commit()
+    conn.exit()
+
+def updatedbv2(number1,number2):
+    conn = sqlite3.connect('checkout.db')
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V2' ",(number1,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V2' ",(number2,))
+    conn.commit()
+    conn.exit()
+
+
 # data to be sent to api
 data = {'client_id': APIClientID,
         'client_secret': APIClientSecret,
@@ -480,40 +521,27 @@ def on_message(client, userdata, msg):
     elif(msg.topic=='C1'):
        c1data=data 
        socketio.emit('c1number', c1data, namespace='/c1test')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C1'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C1'",(number2,))
-       conn.commit()
+       updatedbc1(number1,number2)
     elif(msg.topic=='C2'):
        c2data=data 
        socketio.emit('c2number', c2data, namespace='/c2test')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C2'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C2'",(number2,))
-       conn.commit()
+       updatedbc2(number1,number2)
     elif(msg.topic=='C3'):
        c3data=data 
        socketio.emit('c3number', c3data, namespace='/c3test')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C3'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C3'",(number2,))
-       conn.commit()
+       updatedbc3(number1,number2)
     elif(msg.topic=='V1'):
        v1data=data 
        socketio.emit('v1number', v1data, namespace='/v1test')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V1'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V1'",(number2,))
-       conn.commit()
+       updatedbv1(number1,number2)
     elif(msg.topic=='V2'):
        v2data=data 
        socketio.emit('v2number', v2data, namespace='/v2test')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V2'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V2'",(number2,))
-       conn.commit()
+       updatedbv2(number1,number2)
     elif(msg.topic=='V4'):
        v4data=data 
        socketio.emit('v4number', v4data, namespace='/v4test')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V4'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V4'",(number2,))
-       conn.commit()
-    conn.close()
+       updatedbv4(number1,number2)
 
 
 if __name__ == "__main__":
