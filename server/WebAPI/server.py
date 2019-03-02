@@ -10,9 +10,10 @@ from threading import Thread, Event
 import requests
 import json
 import os
+import logging
 import sqlite3 
 
-
+logging.basicConfig(filename='beertap.log',level=logging.DEBUG)
 conn = sqlite3.connect('checkout.db')
 print "Opened database successfully";
 
@@ -114,7 +115,6 @@ app.config['DEBUG'] = True
 # turn the flask app into a socketio app
 socketio = SocketIO(app)
 
-
 @socketio.on('connect', namespace='/test')
 def test_connect():
     print('Cient connected')
@@ -174,101 +174,150 @@ def v4():
 def Setup():
     print("Setup Complete") 
 
+def order_placed(relay):
+    if(relay['state']=='off'):
+       if(relay['id']== 1):
+          print("Order Checkout")
+          cur.execute("SELECT A3 FROM tasks")
+          rows = cur.fetchall()
+          print(row)
+          #checkout(4351153,qty1,"Table A3::TAP1",cfg.RefA3) 
+          #checkout(4351153,qty2,"Table A3::TAP2",cfg.RefA1) 
+          conn.execute("update checkout set tap1 =0  where id = A3")
+          conn.execute("update checkout set tap2 =0  where id = A3")
+          conn.commit()
+       elif(relay['id']==2):
+          print("Order Checkout")
+          print(qty1) 
+          print(qty2) 
+          checkout(4351153,qty1,"Table A1::TAP1",cfg.RefA3) 
+          checkout(4351153,qty2,"Table A1::TAP2",cfg.RefA1) 
+          conn.execute("update checkout set tap1 =0  where id = A1")
+          conn.execute("update checkout set tap2 =0  where id = A1")
+          conn.commit()
+       elif(relay['id']==3):
+          print("Order Checkout")
+          print(qty1) 
+          print(qty2) 
+          checkout(4351153,qty1,"Table A4::TAP1",cfg.RefA3) 
+          checkout(4351153,qty2,"Table A4::TAP2",cfg.RefA1) 
+          conn.execute("update checkout set tap1 =0  where id = A4")
+          conn.execute("update checkout set tap2 =0  where id = A4")
+          conn.commit()
+       elif(relay['id']==4):
+          print("Order Checkout")
+          print(qty1) 
+          print(qty2) 
+          checkout(4351153,qty1,"Table A6::TAP1",cfg.RefA3) 
+          checkout(4351153,qty2,"Table A6::TAP2",cfg.RefA1) 
+          conn.execute("update checkout set tap1 =0  where id = A6")
+          conn.execute("update checkout set tap2 =0  where id = A6")
+          conn.commit()
+       elif(relay['id']==5):
+          print("Order Checkout")
+          print(qty1) 
+          print(qty2) 
+          checkout(4351153,qty1,"Table C1::TAP1",cfg.RefA3) 
+          checkout(4351153,qty2,"Table C1::TAP2",cfg.RefA1) 
+          conn.execute("update checkout set tap1 =0  where id = C1")
+          conn.execute("update checkout set tap2 =0  where id = C1")
+          conn.commit()
+       elif(relay['id']==6):
+          print("Order Checkout")
+          print(qty1) 
+          print(qty2) 
+          checkout(4351153,qty1,"Table C2::TAP1",cfg.RefA3) 
+          checkout(4351153,qty2,"Table C2::TAP2",cfg.RefA1) 
+          conn.execute("update checkout set tap1 =0  where id = C2")
+          conn.execute("update checkout set tap2 =0  where id = C2")
+          conn.commit()
+       elif(relay['id']==7):
+          print("Order Checkout")
+          print(qty1) 
+          print(qty2) 
+          checkout(4351153,qty1,"Table C3::TAP1",cfg.RefA3) 
+          checkout(4351153,qty2,"Table C3::TAP2",cfg.RefA1) 
+          conn.execute("update checkout set tap1 =0  where id = C3")
+          conn.execute("update checkout set tap2 =0  where id = C3")
+          conn.commit()
+       elif(relay['id']==8):
+          print("Order Checkout")
+          print(qty1) 
+          print(qty2) 
+          checkout(4351153,qty1,"Table V4::TAP1",cfg.RefA3) 
+          checkout(4351153,qty2,"Table V4::TAP2",cfg.RefA1) 
+          conn.execute("update checkout set tap1 =0  where id = V4")
+          conn.execute("update checkout set tap2 =0  where id = V4")
+          conn.commit()
+       elif(relay['id']==9):
+          print("Order Checkout")
+          print(qty1) 
+          print(qty2) 
+          checkout(4351153,qty1,"Table V1::TAP1",cfg.RefA3) 
+          checkout(4351153,qty2,"Table V1::TAP2",cfg.RefA1) 
+          conn.execute("update checkout set tap1 =0  where id = V1")
+          conn.execute("update checkout set tap2 =0  where id = V1")
+          conn.commit()
+       elif(relay['id']==10):
+          print("Order Checkout")
+          print(qty1) 
+          print(qty2) 
+          checkout(4351153,qty1,"Table V2::TAP1",cfg.RefA3) 
+          checkout(4351153,qty2,"Table V2::TAP2",cfg.RefA1) 
+          conn.execute("update checkout set tap1 =0  where id = V2")
+          conn.execute("update checkout set tap2 =0  where id = V2")
+          conn.commit()
 def UpdatePinFromRelayObject(relay):
     if(relay['id'] ==1):  
        if(relay['state']=='on'): 
           A3.on()
-          ordera3=0
        else:
           A3.off()
-          ordera3=1
     elif(relay['id'] ==2):
        if(relay['state']=='on'): 
           A1.on()
-          ordera1=0
        else:
           A1.off()
-          ordera1=1
     elif(relay['id'] ==3):
        if(relay['state']=='on'): 
           A4.on()
-          ordera4=0
        else:
           A4.off()
-          ordera4=1
     elif(relay['id'] ==4):
        if(relay['state']=='on'): 
           A6.on()
-          ordera6=0
        else:
           A6.off()
-          ordera6=1
     elif(relay['id'] ==5):
        if(relay['state']=='on'): 
           C1.on()
-          orderc1=0
        else:
           C1.off()
-          orderc1=1
     elif(relay['id'] ==6):
        if(relay['state']=='on'): 
           C2.on()
-          orderc2=0
        else:
           C2.off()
-          orderc2=1
     elif(relay['id'] ==7):
        if(relay['state']=='on'): 
           C3.on()
-          orderc3=0
        else:
           C3.off()
-          orderc3=1
     elif(relay['id'] ==8):
        if(relay['state']=='on'): 
           V1.on()
-          orderv1=0
        else:
           V1.off()
-          orderv1=1
     elif(relay['id'] ==9):
        if(relay['state']=='on'): 
           V2.on()
-          orderv2=0
        else:
           V2.off()
-          orderv2=1
     elif(relay['id'] ==10):
        if(relay['state']=='on'): 
           V4.on()
-          orderv4=0
        else:
-          #qty1=v4data['tap1'] 
-          #qty2=v4data['tap2']
           V4.off()
-          orderv4=1
-
-orderstarta1=0
-orderstarta3=0
-
-def UpdateOrder(relay):
-    if(relay['id'] ==1):  
-       if(relay['state']=='off'):
-          if orderstarta2==1:
-             checkout(cfg.pid1,47,cfg.msg1A3,cfg.RefA3)
-             checkout(cfg.pid2,43,cfg.msg2A3,cfg.RefA3)
-             orderstarta1=0
-       else:
-          orderstarta3=1
-    elif(relay['id'] ==2):
-       if(relay['state']=='off'): 
-          if orderstarta1==1:
-             checkout(cfg.pid1,47,cfg.msg1A1,cfg.RefA1)
-             checkout(cfg.pid2,43,cfg.msg2A1,cfg.RefA1)
-             orderstarta1=0
-       else:
-          orderstarta1=1
-
 
 @app.route('/WebRelay/', methods=['GET'])
 def index():
@@ -299,7 +348,7 @@ def update_relay(relay_id):
     relay = matchingRelays[0]
     relay['state']=request.json.get('state')
     UpdatePinFromRelayObject(relay)
-    #UpdateOrder(relay)
+    order_placed(relay)
     return jsonify({'relay': relay})
 
 def on_connect(client, userdata, flags, rc):
@@ -323,33 +372,63 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data 
        socketio.emit('a3number', a3data, namespace='/a3test')
+       conn.execute("UPDATE checkout set tap1 =?  where ID = A3",(number1))
+       conn.execute("UPDATE checkout set tap2 =?  where ID = A3",(number2))
+       conn.commit()
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
+       conn.execute("UPDATE checkout set tap1 =?  where ID = A1",(number1))
+       conn.execute("UPDATE checkout set tap2 =?  where ID = A1",(number2))
+       conn.commit()
     elif(msg.topic=='A4'):
        a4data=data 
        socketio.emit('a4number', a4data, namespace='/a4test')
+       conn.execute("UPDATE checkout set tap1 =?  where ID = A4",(number1))
+       conn.execute("UPDATE checkout set tap2 =?  where ID = A4",(number2))
+       conn.commit()
     elif(msg.topic=='A6'):
        a6data=data 
        socketio.emit('newnumber', a6data, namespace='/test')
+       conn.execute("UPDATE checkout set tap1 =?  where ID = A6",(number1))
+       conn.execute("UPDATE checkout set tap2 =?  where ID = A6",(number2))
+       conn.commit()
     elif(msg.topic=='C1'):
        c1data=data 
        socketio.emit('c1number', c1data, namespace='/c1test')
+       conn.execute("UPDATE checkout set tap1 =?  where ID = C1",(number1))
+       conn.execute("UPDATE checkout set tap2 =?  where ID = C1",(number2))
+       conn.commit()
     elif(msg.topic=='C2'):
        c2data=data 
        socketio.emit('c2number', c2data, namespace='/c2test')
+       conn.execute("UPDATE checkout set tap1 =?  where ID = C2",(number1))
+       conn.execute("UPDATE checkout set tap2 =?  where ID = C2",(number2))
+       conn.commit()
     elif(msg.topic=='C3'):
        c3data=data 
        socketio.emit('c3number', c3data, namespace='/c3test')
+       conn.execute("UPDATE checkout set tap1 =?  where ID = C3",(number1))
+       conn.execute("UPDATE checkout set tap2 =?  where ID = C3",(number2))
+       conn.commit()
     elif(msg.topic=='V1'):
        v1data=data 
        socketio.emit('v1number', v1data, namespace='/v1test')
+       conn.execute("UPDATE checkout set tap1 =?  where ID = V1",(number1))
+       conn.execute("UPDATE checkout set tap2 =?  where ID = V1",(number2))
+       conn.commit()
     elif(msg.topic=='V2'):
        v2data=data 
        socketio.emit('v2number', v2data, namespace='/v2test')
+       conn.execute("UPDATE checkout set tap1 =?  where ID = V2",(number1))
+       conn.execute("UPDATE checkout set tap2 =?  where ID = V2",(number2))
+       conn.commit()
     elif(msg.topic=='V4'):
        v4data=data 
        socketio.emit('v4number', v4data, namespace='/v4test')
+       conn.execute("UPDATE checkout set tap1 =?  where ID = V4",(number1))
+       conn.execute("UPDATE checkout set tap2 =?  where ID = V4",(number2))
+       conn.commit()
 
 
 if __name__ == "__main__":
