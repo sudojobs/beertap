@@ -15,7 +15,7 @@ import sqlite3
 
 logging.basicConfig(filename='beertap.log',level=logging.DEBUG)
 conn = sqlite3.connect('checkout.db')
-print "Opened database successfully";
+print("Opened database successfully");
 
 __author__ = '--'
 # defining the api-endpoint  
@@ -359,7 +359,7 @@ def on_connect(client, userdata, flags, rc):
 
   # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    print("%s %s" % (msg.topic,msg.payload))
+    #print("%s %s" % (msg.topic,msg.payload))
     status=str(msg.payload.decode('utf-8','ignore'))
     sup=status.split(",")
     a=sup[0].split(":")
