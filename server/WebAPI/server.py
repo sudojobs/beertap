@@ -26,10 +26,11 @@ APIClientID = "d3c345808af848adb6c89a43a48e18be"
 APIClientSecret = "66f7456893ca4dce855bfa481a68aa9fe3a42b04a95d4ee2bbb385096cecded0"
 
 
-def updatedb(tap,number,table):
-    print ("tap : %s number : %d table : %s")   %  ( tap,number , table)
+def updatedb(number1,number2):
+    print("I am in update")
     conn = sqlite3.connect('checkout.db')
-    conn.execute("UPDATE checkout set ? = ?  where ID = ? ",(tap,number1,table,))
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3' ",(number1,))
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3' ",(number2,))
     conn.commit()
     conn.exit()
 
@@ -442,12 +443,7 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
-       if(number1 > 0):
-           print(number1)
-           updatedb(tap1,number1,'A3')
-       if(number2 > 0):
-           print(number1)
-           updatedb(tap2,number2,'A3')
+       updatedb(number1,number2)
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
