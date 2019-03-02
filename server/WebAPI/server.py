@@ -363,14 +363,14 @@ def order_placed(relay):
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4) 
           checkout(cfg.pid2,qty2,cfg.msg2V4,cfg.RefV4) 
-          conn.execute("update checkout set tap1 =0  where id = 'V4'")
-          conn.execute("update checkout set tap2 =0  where id = 'V4'")
-          conn.commit()
+          conncc.execute("update checkout set tap1 =0  where id = 'V4'")
+          connc.execute("update checkout set tap2 =0  where id = 'V4'")
+          connc.commit()
           connc.close()  
        elif(relay['id']==9):
           print("Order Checkout V1")
           connc = sqlite3.connect('checkout.db')
-          cursor = conn.execute("SELECT *  from checkout where ID ='V1'")
+          cursor = connc.execute("SELECT *  from checkout where ID ='V1'")
           rows =cursor.fetchall()
           for row in rows:
               print(row[1])
@@ -379,14 +379,14 @@ def order_placed(relay):
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1V1,cfg.RefV1) 
           checkout(cfg.pid2,qty2,cfg.msg1V2,cfg.RefV1) 
-          conn.execute("update checkout set tap1 =0  where id = 'V1'")
-          conn.execute("update checkout set tap2 =0  where id = 'V1'")
-          conn.commit()
+          connc.execute("update checkout set tap1 =0  where id = 'V1'")
+          connc.execute("update checkout set tap2 =0  where id = 'V1'")
+          connc.commit()
           connc.close()  
        elif(relay['id']==10):
           print("Order Checkout V2")
           connc = sqlite3.connect('checkout.db')
-          cursor = conn.execute("SELECT *  from checkout where ID ='V2'")
+          cursor = connc.execute("SELECT *  from checkout where ID ='V2'")
           rows =cursor.fetchall()
           for row in rows:
               print(row[1])
@@ -395,9 +395,9 @@ def order_placed(relay):
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1V2,cfg.RefV2) 
           checkout(cfg.pid2,qty2,cfg.msg2V2,cfg.RefV2) 
-          conn.execute("update checkout set tap1 =0  where id = 'V2'")
-          conn.execute("update checkout set tap2 =0  where id = 'V2'")
-          conn.commit()
+          connc.execute("update checkout set tap1 =0  where id = 'V2'")
+          connc.execute("update checkout set tap2 =0  where id = 'V2'")
+          connc.commit()
           connc.close()  
 
 def UpdatePinFromRelayObject(relay):
