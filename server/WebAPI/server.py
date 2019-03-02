@@ -167,7 +167,7 @@ def Setup():
 def order_placed(relay):
     if(relay['state']=='off'):
        if(relay['id']== 1):
-           print("Order Checkout A3")
+          print("Order Checkout A3")
           conn = sqlite3.connect('checkout.db')
           cursor = conn.execute("SELECT *  from checkout where ID ='A3'")
           rows =cursor.fetchall()
@@ -209,7 +209,7 @@ def order_placed(relay):
               print(row[2])
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1A4,cfg.RefA4) 
-          checkout(cfg,pid2,qty2,cfg.msg2A4,cfg.RefA4) 
+          checkout(cfg.pid2,qty2,cfg.msg2A4,cfg.RefA4) 
           conn.execute("update checkout set tap1 =0  where id = 'A4'")
           conn.execute("update checkout set tap2 =0  where id = 'A4'")
           conn.commit()
@@ -225,7 +225,7 @@ def order_placed(relay):
               print(row[2])
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1A6,cfg.RefA6) 
-          checkout(cfg,pid2,qty2,cfg.msg2A6,cfg.RefA6) 
+          checkout(cfg.pid2,qty2,cfg.msg2A6,cfg.RefA6) 
           conn.execute("update checkout set tap1 =0  where id = 'A6'")
           conn.execute("update checkout set tap2 =0  where id = 'A6'")
           conn.commit()
@@ -241,7 +241,7 @@ def order_placed(relay):
               print(row[2])
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1C1,cfg.RefC1) 
-          checkout(cfg,pid2,qty2,cfg.msg2C1,cfg.RefC1) 
+          checkout(cfg.pid2,qty2,cfg.msg2C1,cfg.RefC1) 
           conn.execute("update checkout set tap1 =0  where id = 'C1'")
           conn.execute("update checkout set tap2 =0  where id = 'C1'")
           conn.commit()
@@ -257,7 +257,7 @@ def order_placed(relay):
               print(row[2])
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1C2,cfg.RefC2) 
-          checkout(cfg,pid2,qty2,cfg.msg2C2,cfg.RefC2) 
+          checkout(cfg.pid2,qty2,cfg.msg2C2,cfg.RefC2) 
           conn.execute("update checkout set tap1 =0  where id = 'C2'")
           conn.execute("update checkout set tap2 =0  where id = 'C2'")
           conn.commit()
@@ -273,7 +273,7 @@ def order_placed(relay):
               print(row[2])
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1C3,cfg.RefC3) 
-          checkout(cfg,pid2,qty2,cfg.msg2C3,cfg.RefC3) 
+          checkout(cfg.pid2,qty2,cfg.msg2C3,cfg.RefC3) 
           conn.execute("update checkout set tap1 =0  where id = 'C3'")
           conn.execute("update checkout set tap2 =0  where id = 'C3'")
           conn.commit()
@@ -289,7 +289,7 @@ def order_placed(relay):
               print(row[2])
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4) 
-          checkout(cfg,pid2,qty2,cfg.msg2V4,cfg.RefV4) 
+          checkout(cfg.pid2,qty2,cfg.msg2V4,cfg.RefV4) 
           conn.execute("update checkout set tap1 =0  where id = 'V4'")
           conn.execute("update checkout set tap2 =0  where id = 'V4'")
           conn.commit()
@@ -305,7 +305,7 @@ def order_placed(relay):
               print(row[2])
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1V1,cfg.RefV1) 
-          checkout(cfg,pid2,qty2,cfg.msg1V2,cfg.RefV1) 
+          checkout(cfg.pid2,qty2,cfg.msg1V2,cfg.RefV1) 
           conn.execute("update checkout set tap1 =0  where id = 'V1'")
           conn.execute("update checkout set tap2 =0  where id = 'V1'")
           conn.commit()
@@ -321,7 +321,7 @@ def order_placed(relay):
               print(row[2])
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1V2,cfg.RefV2) 
-          checkout(cfg,pid2,qty2,cfg.msg2V2,cfg.RefV2) 
+          checkout(cfg.pid2,qty2,cfg.msg2V2,cfg.RefV2) 
           conn.execute("update checkout set tap1 =0  where id = 'V2'")
           conn.execute("update checkout set tap2 =0  where id = 'V2'")
           conn.commit()
@@ -432,14 +432,16 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data 
        socketio.emit('a3number', a3data, namespace='/a3test')
-       conn = sqlite3.connect('checkout.db')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3'",(number2,))
-       conn.commit()
-       conn.close()
+       if number1 > 0:
+          conn = sqlite3.connect('checkout.db')
+          conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3'",(number1,))
+          conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3'",(number2,))
+          conn.commit()
+          conn.close()
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
+       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A1'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A1'",(number2,))
        conn.commit()
@@ -447,6 +449,7 @@ def on_message(client, userdata, msg):
     elif(msg.topic=='A4'):
        a4data=data 
        socketio.emit('a4number', a4data, namespace='/a4test')
+       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A4'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A4'",(number2,))
        conn.commit()
@@ -454,6 +457,7 @@ def on_message(client, userdata, msg):
     elif(msg.topic=='A6'):
        a6data=data 
        socketio.emit('newnumber', a6data, namespace='/test')
+       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A6'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A6'",(number2,))
        conn.commit()
@@ -461,6 +465,7 @@ def on_message(client, userdata, msg):
     elif(msg.topic=='C1'):
        c1data=data 
        socketio.emit('c1number', c1data, namespace='/c1test')
+       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C1'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C1'",(number2,))
        conn.commit()
@@ -468,6 +473,7 @@ def on_message(client, userdata, msg):
     elif(msg.topic=='C2'):
        c2data=data 
        socketio.emit('c2number', c2data, namespace='/c2test')
+       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C2'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C2'",(number2,))
        conn.commit()
