@@ -88,7 +88,7 @@ fc2 = PiGPIOFactory(host=cfg.C2ip)
 fc3 = PiGPIOFactory(host=cfg.C3ip)
 fv1 = PiGPIOFactory(host=cfg.V1ip)
 
-retv2 = os.system("ping -q -c2 192.168.1.117")
+retv2 = os.system("fping 192.168.1.117")
 if retv2 ==0:
    fv2 = PiGPIOFactory(host=cfg.V2ip)
    V2 = LED(24, pin_factory=fv2) 
@@ -119,14 +119,6 @@ def test_connect():
 
 @socketio.on('disconnect', namespace='/test')
 def test_disconnect():
-    print('Cient disconnected')
-
-@socketio.on('connect', namespace='/a4test')
-def a4test_connect():
-    print('Cient connected')
-
-@socketio.on('disconnect', namespace='/a4test')
-def a4test_disconnect():
     print('Cient disconnected')
 
 @app.route('/a3')
@@ -185,12 +177,14 @@ def order_placed(relay):
               print(row[2])
               qty2=row[2]
           checkout(cfg.pid1,qty1,"Table A3::TAP1",cfg.RefA3) 
-          checkout(cfg.pid2,qty2,"Table A3::TAP2",cfg.RefA1) 
+          checkout(cfg.pid2,qty2,"Table A3::TAP2",cfg.RefA3) 
           conn.execute("update checkout set tap1 =0  where id = 'A3'")
           conn.execute("update checkout set tap2 =0  where id = 'A3'")
           conn.commit()
+          conn.close()  
        elif(relay['id']==2):
           print("Order Checkout")
+          conn = sqlite3.connect('checkout.db')
           cursor = conn.execute("SELECT *  from checkout where ID ='A1'")
           rows =cursor.fetchall()
           for row in rows:
@@ -198,11 +192,12 @@ def order_placed(relay):
               qty1=row[1]
               print(row[2])
               qty2=row[2]
-          checkout(cfg.pid1,qty1,"Table A1::TAP1",cfg.RefA3) 
+          checkout(cfg.pid1,qty1,"Table A1::TAP1",cfg.RefA1) 
           checkout(cfg.pid2,qty2,"Table A1::TAP2",cfg.RefA1) 
           conn.execute("update checkout set tap1 =0  where id = 'A1'")
           conn.execute("update checkout set tap2 =0  where id = 'A1'")
           conn.commit()
+          conn.close()  
        elif(relay['id']==3):
           print("Order Checkout")
           cursor = conn.execute("SELECT *  from checkout where ID ='A4'")
@@ -453,7 +448,7 @@ def on_message(client, userdata, msg):
 
 
 if __name__ == "__main__":
-    print("starting...")
+    print("Starting...")
     try:
         Setup()
         client = mqtt.Client()
