@@ -165,10 +165,10 @@ def Setup():
     print("Setup Complete") 
 
 def order_placed(relay):
+    conn = sqlite3.connect('checkout.db')
     if(relay['state']=='off'):
        if(relay['id']== 1):
           print("Order Checkout A3")
-          conn = sqlite3.connect('checkout.db')
           cursor = conn.execute("SELECT *  from checkout where ID ='A3'")
           rows =cursor.fetchall()
           for row in rows:
@@ -181,10 +181,8 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'A3'")
           conn.execute("update checkout set tap2 =0  where id = 'A3'")
           conn.commit()
-          conn.close()  
        elif(relay['id']==2):
           print("Order Checkout A1")
-          conn = sqlite3.connect('checkout.db')
           cursor = conn.execute("SELECT *  from checkout where ID ='A1'")
           rows =cursor.fetchall()
           for row in rows:
@@ -197,10 +195,8 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'A1'")
           conn.execute("update checkout set tap2 =0  where id = 'A1'")
           conn.commit()
-          conn.close()  
        elif(relay['id']==3):
           print("Order Checkout A4")
-          conn = sqlite3.connect('checkout.db')
           cursor = conn.execute("SELECT *  from checkout where ID ='A4'")
           rows =cursor.fetchall()
           for row in rows:
@@ -213,10 +209,8 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'A4'")
           conn.execute("update checkout set tap2 =0  where id = 'A4'")
           conn.commit()
-          conn.close()  
        elif(relay['id']==4):
           print("Order Checkout A6")
-          conn = sqlite3.connect('checkout.db')
           cursor = conn.execute("SELECT *  from checkout where ID ='A6'")
           rows =cursor.fetchall()
           for row in rows:
@@ -229,10 +223,8 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'A6'")
           conn.execute("update checkout set tap2 =0  where id = 'A6'")
           conn.commit()
-          conn.close()  
        elif(relay['id']==5):
-          print("Order Checkout")
-          conn = sqlite3.connect('checkout.db')
+          print("Order Checkout C1")
           cursor = conn.execute("SELECT *  from checkout where ID ='C1'")
           rows =cursor.fetchall()
           for row in rows:
@@ -245,10 +237,8 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'C1'")
           conn.execute("update checkout set tap2 =0  where id = 'C1'")
           conn.commit()
-          conn.close()  
        elif(relay['id']==6):
-          print("Order Checkout")
-          conn = sqlite3.connect('checkout.db')
+          print("Order Checkout C2")
           cursor = conn.execute("SELECT *  from checkout where ID ='C2'")
           rows =cursor.fetchall()
           for row in rows:
@@ -261,10 +251,8 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'C2'")
           conn.execute("update checkout set tap2 =0  where id = 'C2'")
           conn.commit()
-          conn.close()  
        elif(relay['id']==7):
-          print("Order Checkout")
-          conn = sqlite3.connect('checkout.db')
+          print("Order Checkout C3")
           cursor = conn.execute("SELECT *  from checkout where ID ='C3'")
           rows =cursor.fetchall()
           for row in rows:
@@ -277,10 +265,8 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'C3'")
           conn.execute("update checkout set tap2 =0  where id = 'C3'")
           conn.commit()
-          conn.close()  
        elif(relay['id']==8):
-          print("Order Checkout")
-          conn = sqlite3.connect('checkout.db')
+          print("Order Checkout V4")
           cursor = conn.execute("SELECT *  from checkout where ID ='V4'")
           rows =cursor.fetchall()
           for row in rows:
@@ -293,10 +279,8 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'V4'")
           conn.execute("update checkout set tap2 =0  where id = 'V4'")
           conn.commit()
-          conn.close()  
        elif(relay['id']==9):
-          print("Order Checkout")
-          conn = sqlite3.connect('checkout.db')
+          print("Order Checkout V1")
           cursor = conn.execute("SELECT *  from checkout where ID ='V1'")
           rows =cursor.fetchall()
           for row in rows:
@@ -309,10 +293,8 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'V1'")
           conn.execute("update checkout set tap2 =0  where id = 'V1'")
           conn.commit()
-          conn.close()  
        elif(relay['id']==10):
-          print("Order Checkout")
-          conn = sqlite3.connect('checkout.db')
+          print("Order Checkout V2")
           cursor = conn.execute("SELECT *  from checkout where ID ='V2'")
           rows =cursor.fetchall()
           for row in rows:
@@ -325,7 +307,7 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 =0  where id = 'V2'")
           conn.execute("update checkout set tap2 =0  where id = 'V2'")
           conn.commit()
-          conn.close()  
+       conn.close()  
 
 def UpdatePinFromRelayObject(relay):
     if(relay['id'] ==1):  
@@ -420,6 +402,7 @@ def on_connect(client, userdata, flags, rc):
   # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     #print("%s %s" % (msg.topic,msg.payload))
+    conn = sqlite3.connect('checkout.db')
     status=str(msg.payload.decode('utf-8','ignore'))
     sup=status.split(",")
     a=sup[0].split(":")
@@ -432,83 +415,66 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data 
        socketio.emit('a3number', a3data, namespace='/a3test')
-       conn = sqlite3.connect('checkout.db')
+       print(number1)
+       print(number2)
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3'",(number2,))
        conn.commit()
-       conn.close()
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
-       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A1'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A1'",(number2,))
        conn.commit()
-       conn.close()
     elif(msg.topic=='A4'):
        a4data=data 
        socketio.emit('a4number', a4data, namespace='/a4test')
-       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A4'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A4'",(number2,))
        conn.commit()
-       conn.close()
     elif(msg.topic=='A6'):
        a6data=data 
        socketio.emit('newnumber', a6data, namespace='/test')
-       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A6'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A6'",(number2,))
        conn.commit()
-       conn.close()
     elif(msg.topic=='C1'):
        c1data=data 
        socketio.emit('c1number', c1data, namespace='/c1test')
-       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C1'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C1'",(number2,))
        conn.commit()
-       conn.close()
     elif(msg.topic=='C2'):
        c2data=data 
        socketio.emit('c2number', c2data, namespace='/c2test')
-       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C2'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C2'",(number2,))
        conn.commit()
-       conn.close()
     elif(msg.topic=='C3'):
        c3data=data 
        socketio.emit('c3number', c3data, namespace='/c3test')
-       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C3'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C3'",(number2,))
        conn.commit()
-       conn.close()
     elif(msg.topic=='V1'):
        v1data=data 
        socketio.emit('v1number', v1data, namespace='/v1test')
-       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V1'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V1'",(number2,))
        conn.commit()
-       conn.close()
     elif(msg.topic=='V2'):
        v2data=data 
        socketio.emit('v2number', v2data, namespace='/v2test')
-       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V2'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V2'",(number2,))
        conn.commit()
-       conn.close()
     elif(msg.topic=='V4'):
        v4data=data 
        socketio.emit('v4number', v4data, namespace='/v4test')
-       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V4'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V4'",(number2,))
        conn.commit()
-       conn.close()
+    conn.close()
 
 
 if __name__ == "__main__":
