@@ -464,9 +464,6 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
-       if flag==0:
-          type(number1)
-          flag=1
        updatedba3(number1,number2)
     elif(msg.topic=='A1'):
        a1data=data
