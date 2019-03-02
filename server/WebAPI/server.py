@@ -14,8 +14,6 @@ import logging
 import sqlite3 
 
 logging.basicConfig(filename='beertap.log',level=logging.DEBUG)
-conn = sqlite3.connect('checkout.db')
-print("Opened database successfully");
 
 __author__ = '--'
 # defining the api-endpoint  
@@ -178,6 +176,7 @@ def order_placed(relay):
     if(relay['state']=='off'):
        if(relay['id']== 1):
           print("Order Checkout")
+          conn = sqlite3.connect('checkout.db')
           cursor = conn.execute("SELECT *  from checkout where ID ='A3'")
           rows =cursor.fetchall()
           for row in rows:
@@ -286,6 +285,7 @@ def order_placed(relay):
           conn.execute("update checkout set tap1 = 0  where id = 'V2'")
           conn.execute("update checkout set tap2 = 0  where id = 'V2'")
           conn.commit()
+
 def UpdatePinFromRelayObject(relay):
     if(relay['id'] ==1):  
        if(relay['state']=='on'): 
@@ -391,9 +391,11 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data 
        socketio.emit('a3number', a3data, namespace='/a3test')
+       conn = sqlite3.connect('checkout.db')
        conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3'",(number1,))
        conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3'",(number2,))
        conn.commit()
+       conn.close()
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
