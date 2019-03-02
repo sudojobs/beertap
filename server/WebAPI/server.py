@@ -25,6 +25,15 @@ RestaurantCode = "HK054042"
 APIClientID = "d3c345808af848adb6c89a43a48e18be"
 APIClientSecret = "66f7456893ca4dce855bfa481a68aa9fe3a42b04a95d4ee2bbb385096cecded0"
 
+
+def updatedb(tap,number,table):
+    print (tap : %s number : %d table : %s)   %  ( tap,number , table)
+    conn = sqlite3.connect('checkout.db')
+    conn.execute("UPDATE checkout set ? = ?  where ID = ? ",(tap,number1,table,))
+    conn.commit()
+    conn.exit()
+
+
 # data to be sent to api
 data = {'client_id': APIClientID,
         'client_secret': APIClientSecret,
@@ -433,26 +442,39 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
-       conn = sqlite3.connect('checkout.db')
-       conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3'",(number1,))
-       conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3'",(number2,))
-       conn.commit()
-       conn.exit()
+       if(number1 > 0):
+           print(number1)
+           updatedb(tap1,number1,'A3')
+       if(number2 > 0):
+           print(number1)
+           updatedb(tap2,number2,'A3')
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
-       t2 = threading.Thread(target=updatedb, args=('A1',number1,number2,))  
-       t2.start()
+       if(number1 > 0):
+           print(number1)
+           updatedb(tap1,number1,'A1')
+       if(number2 > 0):
+           print(number1)
+           updatedb(tap2,number2,'A1')
     elif(msg.topic=='A4'):
        a4data=data 
        socketio.emit('a4number', a4data, namespace='/a4test')
-       t3 = threading.Thread(target=updatedb, args=('A4',number1,number2,))  
-       t3.start()
+       if(number1 > 0):
+           print(number1)
+           updatedb(tap1,number1,'A4')
+       if(number2 > 0):
+           print(number1)
+           updatedb(tap2,number2,'A4')
     elif(msg.topic=='A6'):
        a6data=data 
        socketio.emit('newnumber', a6data, namespace='/test')
-       t4 = threading.Thread(target=updatedb, args=('A6',number1,number2,))  
-       t4.start()
+       if(number1 > 0):
+           print(number1)
+           updatedb(tap1,number1,'A6')
+       if(number2 > 0):
+           print(number1)
+           updatedb(tap2,number2,'A6')
     elif(msg.topic=='C1'):
        c1data=data 
        socketio.emit('c1number', c1data, namespace='/c1test')
