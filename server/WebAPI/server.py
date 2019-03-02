@@ -352,7 +352,7 @@ def order_placed(relay):
           connc.commit()
           connc.close()  
        elif(relay['id']==8):
-          print("Order Checkout V4")
+          print("Order Checkout V1")
           connc = sqlite3.connect('checkout.db')
           cursor = connc.execute("SELECT *  from checkout where ID ='V4'")
           rows =cursor.fetchall()
@@ -363,12 +363,12 @@ def order_placed(relay):
               qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4) 
           checkout(cfg.pid2,qty2,cfg.msg2V4,cfg.RefV4) 
-          conncc.execute("update checkout set tap1 =0  where id = 'V4'")
+          connc.execute("update checkout set tap1 =0  where id = 'V4'")
           connc.execute("update checkout set tap2 =0  where id = 'V4'")
           connc.commit()
           connc.close()  
        elif(relay['id']==9):
-          print("Order Checkout V1")
+          print("Order Checkout V2")
           connc = sqlite3.connect('checkout.db')
           cursor = connc.execute("SELECT *  from checkout where ID ='V1'")
           rows =cursor.fetchall()
@@ -384,7 +384,7 @@ def order_placed(relay):
           connc.commit()
           connc.close()  
        elif(relay['id']==10):
-          print("Order Checkout V2")
+          print("Order Checkout V4")
           connc = sqlite3.connect('checkout.db')
           cursor = connc.execute("SELECT *  from checkout where ID ='V2'")
           rows =cursor.fetchall()
