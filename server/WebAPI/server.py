@@ -35,22 +35,22 @@ def updatedba3(number1,number2):
 
 def updatedba1(number1,number2):
     conn = sqlite3.connect('checkout.db')
-    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3' ",(number1,))
-    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3' ",(number2,))
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A1' ",(number1,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A1' ",(number2,))
     conn.commit()
     conn.exit()
 
 def updatedba4(number1,number2):
     conn = sqlite3.connect('checkout.db')
-    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3' ",(number1,))
-    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3' ",(number2,))
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A4' ",(number1,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A4' ",(number2,))
     conn.commit()
     conn.exit()
 
 def updatedba6(number1,number2):
     conn = sqlite3.connect('checkout.db')
-    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3' ",(number1,))
-    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3' ",(number2,))
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A6' ",(number1,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A6' ",(number2,))
     conn.commit()
     conn.exit()
 
@@ -464,19 +464,31 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
-       updatedba3(number1,number2)
+       if (number1 > 0 or number2 >0):
+           print(number1)
+           print(number2)
+           updatedba3(number1,number2)
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
-       updatedba1(number1,number2)
+       if (number1 > 0 or number2 > 0):
+           print(number1)
+           print(number2)
+           updatedba1(number1,number2)
     elif(msg.topic=='A4'):
        a4data=data 
        socketio.emit('a4number', a4data, namespace='/a4test')
-       updatedba4(number1,number2)
+       if (number1 > 0 or number2 > 0):
+           print(number1)
+           print(number2)
+           updatedba4(number1,number2)
     elif(msg.topic=='A6'):
        a6data=data 
        socketio.emit('newnumber', a6data, namespace='/test')
-       updatedba6(number1,number2)
+       if (number1 > 0 or number2 > 0):
+           print(number1)
+           print(number2)
+           updatedba6(number1,number2)
     elif(msg.topic=='C1'):
        c1data=data 
        socketio.emit('c1number', c1data, namespace='/c1test')
