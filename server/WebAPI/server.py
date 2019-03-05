@@ -554,61 +554,61 @@ def on_message(client, userdata, msg):
        a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
        #updatedba3(number1,number2)
-       if(number1 > 0 ): db_table=["a3tap1"]=number1
-       if(number2 > 0 ): db_table=["a3tap2"]=number2
+       if(number1 > 0 ): db_table["a3tap1"]=number1
+       if(number2 > 0 ): db_table["a3tap2"]=number2
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
-       if(number1 > 0 ): db_table=["a1tap1"]=number1
-       if(number2 > 0 ): db_table=["a1tap2"]=number2
+       if(number1 > 0 ): db_table["a1tap1"]=number1
+       if(number2 > 0 ): db_table["a1tap2"]=number2
        #updatedba1(number1,number2)
     elif(msg.topic=='A4'):
        a4data=data 
        socketio.emit('a4number', a4data, namespace='/a4test')
-       if(number1 > 0 ): db_table=["a4tap1"]=number1
-       if(number2 > 0 ): db_table=["a4tap2"]=number2
+       if(number1 > 0 ): db_table["a4tap1"]=number1
+       if(number2 > 0 ): db_table["a4tap2"]=number2
        #updatedba4(number1,number2)
     elif(msg.topic=='A6'):
        a6data=data 
        socketio.emit('newnumber', a6data, namespace='/test')
-       if(number1 > 0 ): db_table=["a6tap1"]=number1
-       if(number2 > 0 ): db_table=["a6tap2"]=number2
+       if(number1 > 0 ): db_table["a6tap1"]=number1
+       if(number2 > 0 ): db_table["a6tap2"]=number2
        #updatedba6(number1,number2)
     elif(msg.topic=='C1'):
        c1data=data 
        socketio.emit('c1number', c1data, namespace='/c1test')
-       if(number1 > 0 ): db_table=["c1tap1"]=number1
-       if(number2 > 0 ): db_table=["c1tap2"]=number2
+       if(number1 > 0 ): db_table["c1tap1"]=number1
+       if(number2 > 0 ): db_table["c1tap2"]=number2
        #updatedbc1(number1,number2)
     elif(msg.topic=='C2'):
        c2data=data 
        socketio.emit('c2number', c2data, namespace='/c2test')
-       if(number1 > 0 ): db_table=["c2tap1"]=number1
-       if(number2 > 0 ): db_table=["c2tap2"]=number2
+       if(number1 > 0 ): db_table["c2tap1"]=number1
+       if(number2 > 0 ): db_table["c2tap2"]=number2
        #updatedbc2(number1,number2)
     elif(msg.topic=='C3'):
        c3data=data 
        socketio.emit('c3number', c3data, namespace='/c3test')
-       if(number1 > 0 ): db_table=["c3tap1"]=number1
-       if(number2 > 0 ): db_table=["c3tap2"]=number2
+       if(number1 > 0 ): db_table["c3tap1"]=number1
+       if(number2 > 0 ): db_table["c3tap2"]=number2
        #updatedbc3(number1,number2)
     elif(msg.topic=='V1'):
        v1data=data 
        socketio.emit('v1number', v1data, namespace='/v1test')
-       if(number1 > 0 ): db_table=["v1tap1"]=number1
-       if(number2 > 0 ): db_table=["v1tap2"]=number2
+       if(number1 > 0 ): db_table["v1tap1"]=number1
+       if(number2 > 0 ): db_table["v1tap2"]=number2
        #updatedbv1(number1,number2)
     elif(msg.topic=='V2'):
        v2data=data 
        socketio.emit('v2number', v2data, namespace='/v2test')
-       if(number1 > 0 ): db_table=["v2tap1"]=number1
-       if(number2 > 0 ): db_table=["v2tap2"]=number2
+       if(number1 > 0 ): db_table["v2tap1"]=number1
+       if(number2 > 0 ): db_table["v2tap2"]=number2
        #updatedbv2(number1,number2)
     elif(msg.topic=='V4'):
        v4data=data 
        socketio.emit('v4number', v4data, namespace='/v4test')
-       if(number1 > 0 ): db_table=["v4tap1"]=number1
-       if(number2 > 0 ): db_table=["v4tap2"]=number2
+       if(number1 > 0 ): db_table["v4tap1"]=number1
+       if(number2 > 0 ): db_table["v4tap2"]=number2
        #updatedbv4(number1,number2)
 
 
