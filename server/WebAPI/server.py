@@ -573,6 +573,7 @@ def on_message(client, userdata, msg):
     #print(data)
     if(msg.topic=='A3'):
        a3data=data
+       print(a3data) 
        if data!= "{'tap1': 0, 'tap2': 0}":
           print(a3data) 
        socketio.emit('a3number', a3data, namespace='/a3test')
