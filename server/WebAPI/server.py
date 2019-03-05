@@ -26,7 +26,7 @@ RestaurantCode = "HK054042"
 APIClientID = "d3c345808af848adb6c89a43a48e18be"
 APIClientSecret = "66f7456893ca4dce855bfa481a68aa9fe3a42b04a95d4ee2bbb385096cecded0"
 
-db_table['a3tap1']= 0
+db_table['a3store']= {'tap1': ' 0', 'tap2': ' 0'}
 db_table['a3tap2']= 0
 db_table['a1tap1']= 0
 db_table['a1tap2']= 0
@@ -264,20 +264,21 @@ def order_placed(relay):
     if(relay['state']=='off'):
        if(relay['id']== 1):
           print("Order Checkout A3")
-          connc = sqlite3.connect('checkout.db')
-          cursor = connc.execute("SELECT *  from checkout where ID ='A3'")
-          rows =cursor.fetchall()
+          #connc = sqlite3.connect('checkout.db')
+          #cursor = connc.execute("SELECT *  from checkout where ID ='A3'")
+          #rows =cursor.fetchall()
           #for row in rows:
           #    print(row[1])
           #    qty1=row[1]
           #    print(row[2])
           #    qty2=row[2]
-          qty1=db_table['a3tap1']
-          qty2=db_table['a3tap2']
-          print(qty1)
-          print(qty2)
-          checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
-          checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
+          #qty1=db_table['a3tap1']
+          #qty2=db_table['a3tap2']
+          #print(qty1)
+          #print(qty2)
+          print(a3store)
+          #checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
+          #checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
           #connc.execute("update checkout set tap1 =0  where id = 'A3'")
           #connc.execute("update checkout set tap2 =0  where id = 'A3'")
@@ -574,12 +575,8 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data
        if data!= {'tap1': ' 0', 'tap2': ' 0'}:
-          print(a3data) 
+          db_table['a3store']= a3data 
        socketio.emit('a3number', a3data, namespace='/a3test')
-       #thread.start_new_thread(updatedba3, (number1,number2, ))
-       #print(number1)
-       #print(number2)
-       #     print(number1)
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
