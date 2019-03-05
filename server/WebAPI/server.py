@@ -270,8 +270,8 @@ def order_placed(relay):
           qty2=int(aqty['tap2'])
           print(qty1)
           print(qty2)
-          checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
-          checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
+          checkout(cfg.pid1,20,cfg.msg1A3,cfg.RefA3) 
+          checkout(cfg.pid2,40,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
        elif(relay['id']==2):
           print("Order Checkout A1")
