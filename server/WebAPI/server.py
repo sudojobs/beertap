@@ -251,8 +251,8 @@ def order_placed(relay):
           db_table['v1store']= {'tap1': ' 0', 'tap2': ' 0'}
        elif(relay['id']==9):
           print("Order Checkout V2")
-          print(db_table['v1store'])
-          aqty=db_table['v1store']
+          print(db_table['v2store'])
+          aqty=db_table['v2store']
           qty1=int(aqty['tap1'])
           qty2=int(aqty['tap2'])
           checkout(cfg.pid1,qty1,cfg.msg1V2,cfg.RefV2) 
@@ -261,8 +261,8 @@ def order_placed(relay):
           db_table['v2store']= {'tap1': ' 0', 'tap2': ' 0'}
        elif(relay['id']==10):
           print("Order Checkout V4")
-          print(db_table['v2store'])
-          aqty=db_table['v2store']
+          print(db_table['v4store'])
+          aqty=db_table['v4store']
           qty1=int(aqty['tap1'])
           qty2=int(aqty['tap2'])
           checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4) 
