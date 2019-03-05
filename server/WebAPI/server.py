@@ -274,6 +274,8 @@ def order_placed(relay):
           #    qty2=row[2]
           qty1=db_table['a3tap1']
           qty2=db_table['a3tap2']
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
           checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
@@ -567,19 +569,12 @@ def on_message(client, userdata, msg):
     number1=a[1]
     temp=b[1] 
     number2=temp[:-1]
-    data1 ={}
     data = {'tap1': number1, 'tap2': number2}
     #print(data)
     if(msg.topic=='A3'):
        a3data=data
-       data1['tap1'] = number1
-       data1['tap2'] = number2
-       if (data1['tap1'] > 0):
-           print(data1['tap1'])
-           db_table['a3tap1']=data1['tap1']
-       if (data1['tap2'] > 0):
-           print(data1['tap2'])
-           db_table['a3tap2']=data1['tap2']
+       if data!= "{'tap1': 0, 'tap2': 0}":
+          print(a3data) 
        socketio.emit('a3number', a3data, namespace='/a3test')
        #thread.start_new_thread(updatedba3, (number1,number2, ))
        #print(number1)
