@@ -26,6 +26,26 @@ RestaurantCode = "HK054042"
 APIClientID = "d3c345808af848adb6c89a43a48e18be"
 APIClientSecret = "66f7456893ca4dce855bfa481a68aa9fe3a42b04a95d4ee2bbb385096cecded0"
 
+db_table['a3tap1']= 0
+db_table['a3tap2']= 0
+db_table['a1tap1']= 0
+db_table['a1tap2']= 0
+db_table['a4tap1']= 0
+db_table['a4tap2']= 0
+db_table['a6tap1']= 0
+db_table['a6tap2']= 0
+db_table['c1tap1']= 0
+db_table['c1tap2']= 0
+db_table['c2tap1']= 0
+db_table['c2tap2']= 0
+db_table['c3tap1']= 0
+db_table['c3tap2']= 0
+db_table['v1tap1']= 0
+db_table['v1tap2']= 0
+db_table['v2tap1']= 0
+db_table['v2tap2']= 0
+db_table['v4tap1']= 0
+db_table['v4tap2']= 0
 
 #def updatedba3(number1,number2):
 #    conn = sqlite3.connect('checkout.db')
@@ -554,8 +574,12 @@ def on_message(client, userdata, msg):
        a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
        #updatedba3(number1,number2)
-       if(number1 > 0 ): db_table["a3tap1"]=number1
-       if(number2 > 0 ): db_table["a3tap2"]=number2
+       if(number1 > 0 ): 
+           print(number1)
+           db_table["a3tap1"]=number1
+       if(number2 > 0 ): 
+           print(number2)
+           db_table["a3tap2"]=number2
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
