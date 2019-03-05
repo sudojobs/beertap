@@ -11,7 +11,7 @@ import requests
 import json
 import os
 import logging
-#import sqlite3 
+import sqlite3 
 
 logging.basicConfig(filename='beertap.log',level=logging.DEBUG)
 
