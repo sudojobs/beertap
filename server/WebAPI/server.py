@@ -267,11 +267,13 @@ def order_placed(relay):
           connc = sqlite3.connect('checkout.db')
           cursor = connc.execute("SELECT *  from checkout where ID ='A3'")
           rows =cursor.fetchall()
-          for row in rows:
-              print(row[1])
-              qty1=row[1]
-              print(row[2])
-              qty2=row[2]
+          #for row in rows:
+          #    print(row[1])
+          #    qty1=row[1]
+          #    print(row[2])
+          #    qty2=row[2]
+          qty1=db_table['a3tap1']
+          qty2=db_table['a3tap2']
           checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
           checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
@@ -565,15 +567,20 @@ def on_message(client, userdata, msg):
     number1=a[1]
     temp=b[1] 
     number2=temp[:-1]
-    data = {'tap1': number1, 'tap2': number2}
+    date ={}
+    data['tap1'] = number1
+    data['tap2'] = number2
+    #data = {'tap1': number1, 'tap2': number2}
     #print(data)
     if(msg.topic=='A3'):
        a3data=data
+       if (data['tap1'] > 0):
+           print data['tap1']
+       if (data['tap2'] > 0):
+           print data['tap2']
+       db_table['a3tap1']=data['tap1']
+       db_table['a3tap2']=data['tap2']
        socketio.emit('a3number', a3data, namespace='/a3test')
-       if number1 > 0 :
-           print(number1)
-       if number2 > 0 :
-           print(number2)
        #thread.start_new_thread(updatedba3, (number1,number2, ))
        #print(number1)
        #print(number2)
