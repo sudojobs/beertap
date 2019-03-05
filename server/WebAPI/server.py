@@ -266,8 +266,10 @@ def order_placed(relay):
           print("Order Checkout A3")
           print(db_table['a3store'])
           aqty=db_table['a3store']
-          qty1=aqty['tap1']
-          qty2=aqty['tap2']
+          qty1=int(aqty['tap1'])
+          qty2=int(aqty['tap2'])
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
           checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
