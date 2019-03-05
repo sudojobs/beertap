@@ -276,7 +276,7 @@ def order_placed(relay):
           #qty2=db_table['a3tap2']
           #print(qty1)
           #print(qty2)
-          print(a3store)
+          print(db_table['a3store'])
           #checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
           #checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
