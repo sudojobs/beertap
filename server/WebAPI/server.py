@@ -277,7 +277,7 @@ def order_placed(relay):
           #print(qty1)
           #print(qty2)
           print(db_table['a3store'])
-          aqty=db_table['a3store'])
+          aqty=db_table['a3store']
           sup=aqty.split(",")
           a=sup[0].split(":")
           b=sup[1].split(":")
