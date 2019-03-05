@@ -264,7 +264,7 @@ def order_placed(relay):
     if(relay['state']=='off'):
        if(relay['id']== 1):
           print("Order Checkout A3")
-          time.sleep(10)
+          sleep(15)
           connc = sqlite3.connect('checkout.db')
           cursor = connc.execute("SELECT *  from checkout where ID ='A3'")
           rows =cursor.fetchall()
@@ -571,7 +571,8 @@ def on_message(client, userdata, msg):
     if(msg.topic=='A3'):
        a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
-       thread.start_new_thread(updatedba3, (number1,number2, ))
+      
+       #thread.start_new_thread(updatedba3, (number1,number2, ))
        #print(number1)
        #print(number2)
        #     print(number1)
