@@ -47,20 +47,20 @@ db_table['v2tap2']= 0
 db_table['v4tap1']= 0
 db_table['v4tap2']= 0
 
-#def updatedba3(number1,number2):
-#    conn = sqlite3.connect('checkout.db')
-#    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3' ",(number1,))
-#    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3' ",(number2,))
-#    conn.commit()
-#    conn.exit()
-#
-#def updatedba1(number1,number2):
-#    conn = sqlite3.connect('checkout.db')
-#    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A1' ",(number1,))
-#    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A1' ",(number2,))
-#    conn.commit()
-#    conn.exit()
-#
+def updatedba3(number1,number2):
+    conn = sqlite3.connect('checkout.db')
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3' ",(number1,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3' ",(number2,))
+    conn.commit()
+    conn.exit()
+
+def updatedba1(number1,number2):
+    conn = sqlite3.connect('checkout.db')
+    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A1' ",(number1,))
+    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A1' ",(number2,))
+    conn.commit()
+    conn.exit()
+
 #def updatedba4(number1,number2):
 #    conn = sqlite3.connect('checkout.db')
 #    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A4' ",(number1,))
