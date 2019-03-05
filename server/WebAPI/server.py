@@ -262,43 +262,38 @@ def order_placed(relay):
     if(relay['state']=='off'):
        if(relay['id']== 1):
           print("Order Checkout A3")
-          #connc = sqlite3.connect('checkout.db')
-          #cursor = connc.execute("SELECT *  from checkout where ID ='A3'")
-          #rows =cursor.fetchall()
-          #for row in rows:
-          #    print(row[1])
-          qty1=db_table["a3tap1"]
-          qty2=db_table["a3tap2"]
-          print(qty1)
-          print(qty2)
+          connc = sqlite3.connect('checkout.db')
+          cursor = connc.execute("SELECT *  from checkout where ID ='A3'")
+          rows =cursor.fetchall()
+          for row in rows:
+              print(row[1])
+              qty1=row[1]
+              print(row[2])
+              qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
           checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
-          #connc.execute("update checkout set tap1 =0  where id = 'A3'")
-          #connc.execute("update checkout set tap2 =0  where id = 'A3'")
-          #connc.commit()
-          #connc.close()  
+          connc.execute("update checkout set tap1 =0  where id = 'A3'")
+          connc.execute("update checkout set tap2 =0  where id = 'A3'")
+          connc.commit()
+          connc.close()  
        elif(relay['id']==2):
           print("Order Checkout A1")
-          #connc = sqlite3.connect('checkout.db')
-          #cursor = connc.execute("SELECT *  from checkout where ID ='A1'")
-          #rows =cursor.fetchall()
-          #for row in rows:
-          #    print(row[1])
-          #    qty1=row[1]
-          #    print(row[2])
-          #    qty2=row[2]
-          qty1=db_table["a1tap1"]
-          qty2=db_table["a1tap2"]
-          print(qty1)
-          print(qty2)
+          connc = sqlite3.connect('checkout.db')
+          cursor = connc.execute("SELECT *  from checkout where ID ='A1'")
+          rows =cursor.fetchall()
+          for row in rows:
+              print(row[1])
+              qty1=row[1]
+              print(row[2])
+              qty2=row[2]
           checkout(cfg.pid1,qty1,cfg.msg1A1,cfg.RefA1) 
           checkout(cfg.pid2,qty2,cfg.msg2A1,cfg.RefA1) 
           print("Checkout Success A1")
-          #connc.execute("update checkout set tap1 =0  where id = 'A1'")
-          #connc.execute("update checkout set tap2 =0  where id = 'A1'")
-          #connc.commit()
-          #connc.close()  
+          connc.execute("update checkout set tap1 =0  where id = 'A1'")
+          connc.execute("update checkout set tap2 =0  where id = 'A1'")
+          connc.commit()
+          connc.close()  
        elif(relay['id']==3):
           print("Order Checkout A4")
           #connc = sqlite3.connect('checkout.db')
@@ -572,31 +567,25 @@ def on_message(client, userdata, msg):
     #print(data)
     if(msg.topic=='A3'):
        a3data=data
-       if(number1 > 0 ): db_table["a3tap1"]=number1
-       if(number2 > 0 ): db_table["a3tap2"]=number2
        socketio.emit('a3number', a3data, namespace='/a3test')
-       #updatedba3(number1,number2)
+       thread.start_new_thread(updatedba3, (number1,number2, ))
        #print(number1)
        #print(number2)
        #     print(number1)
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
-       if(number1 > 0 ): db_table["a1tap1"]=number1
-       if(number2 > 0 ): db_table["a1tap2"]=number2
-       #updatedba1(number1,number2)
+       thread.start_new_thread(updatedba1, (number1,number2, ))
     elif(msg.topic=='A4'):
        a4data=data 
        socketio.emit('a4number', a4data, namespace='/a4test')
-       if(number1 > 0 ): db_table["a4tap1"]=number1
-       if(number2 > 0 ): db_table["a4tap2"]=number2
-       #updatedba4(number1,number2)
+       thread.start_new_thread(updatedba4, (number1,number2, ))
     elif(msg.topic=='A6'):
        a6data=data 
        socketio.emit('newnumber', a6data, namespace='/test')
        if(number1 > 0 ): db_table["a6tap1"]=number1
        if(number2 > 0 ): db_table["a6tap2"]=number2
-       #updatedba6(number1,number2)
+       thread.start_new_thread(updatedba6, (number1,number2, ))
     elif(msg.topic=='C1'):
        c1data=data 
        socketio.emit('c1number', c1data, namespace='/c1test')
