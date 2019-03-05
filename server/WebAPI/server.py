@@ -276,9 +276,9 @@ def order_placed(relay):
           checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
           checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
-          connc.execute("update checkout set tap1 =0  where id = 'A3'")
-          connc.execute("update checkout set tap2 =0  where id = 'A3'")
-          connc.commit()
+          #connc.execute("update checkout set tap1 =0  where id = 'A3'")
+          #connc.execute("update checkout set tap2 =0  where id = 'A3'")
+          #connc.commit()
           connc.close()  
        elif(relay['id']==2):
           print("Order Checkout A1")
