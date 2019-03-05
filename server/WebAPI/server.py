@@ -269,8 +269,8 @@ def order_placed(relay):
           #    print(row[1])
           qty1=db_table["a3tap1"]
           qty2=db_table["a3tap2"]
-          pint(qty1)
-          pint(qty2)
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
           checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
@@ -290,8 +290,8 @@ def order_placed(relay):
           #    qty2=row[2]
           qty1=db_table["a1tap1"]
           qty2=db_table["a1tap2"]
-          pint(qty1)
-          pint(qty2)
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1A1,cfg.RefA1) 
           checkout(cfg.pid2,qty2,cfg.msg2A1,cfg.RefA1) 
           print("Checkout Success A1")
@@ -311,8 +311,8 @@ def order_placed(relay):
           #    qty2=row[2]
           qty1=db_table["a4tap1"]
           qty2=db_table["a4tap2"]
-          pint(qty1)
-          pint(qty2)
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1A4,cfg.RefA4) 
           checkout(cfg.pid2,qty2,cfg.msg2A4,cfg.RefA4) 
           print("Checkout Success A4")
@@ -332,8 +332,8 @@ def order_placed(relay):
           #    qty2=row[2]
           qty1=db_table["a6tap1"]
           qty2=db_table["a6tap2"]
-          pint(qty1)
-          pint(qty2)
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1A6,cfg.RefA6) 
           checkout(cfg.pid2,qty2,cfg.msg2A6,cfg.RefA6) 
           print("Checkout Success A6")
@@ -353,8 +353,8 @@ def order_placed(relay):
           #    qty2=row[2]
           qty1=db_table["c1tap1"]
           qty2=db_table["c1tap2"]
-          pint(qty1)
-          pint(qty2)
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1C1,cfg.RefC1) 
           checkout(cfg.pid2,qty2,cfg.msg2C1,cfg.RefC1) 
           print("Checkout Success C1")
@@ -374,8 +374,8 @@ def order_placed(relay):
           #    qty2=row[2]
           qty1=db_table["c2tap1"]
           qty2=db_table["c2tap2"]
-          pint(qty1)
-          pint(qty2)
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1C2,cfg.RefC2) 
           checkout(cfg.pid2,qty2,cfg.msg2C2,cfg.RefC2) 
           print("Checkout Success C2")
@@ -395,8 +395,8 @@ def order_placed(relay):
           #    qty2=row[2]
           qty1=db_table["c3tap1"]
           qty2=db_table["c3tap2"]
-          pint(qty1)
-          pint(qty2)
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1C3,cfg.RefC3) 
           checkout(cfg.pid2,qty2,cfg.msg2C3,cfg.RefC3) 
           print("Checkout Success C3")
@@ -416,8 +416,8 @@ def order_placed(relay):
           #    qty2=row[2]
           qty1=db_table["v4tap1"]
           qty2=db_table["v4tap2"]
-          pint(qty1)
-          pint(qty2)
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4) 
           checkout(cfg.pid2,qty2,cfg.msg2V4,cfg.RefV4) 
           print("Checkout Success V4")
@@ -437,8 +437,8 @@ def order_placed(relay):
           #    qty2=row[2]
           qty1=db_table["v1tap1"]
           qty2=db_table["v1tap2"]
-          pint(qty1)
-          pint(qty2)
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1V1,cfg.RefV1) 
           checkout(cfg.pid2,qty2,cfg.msg1V2,cfg.RefV1) 
           print("Checkout Success V1")
@@ -458,8 +458,8 @@ def order_placed(relay):
           #    qty2=row[2]
           qty1=db_table["v2tap1"]
           qty2=db_table["v2tap2"]
-          pint(qty1)
-          pint(qty2)
+          print(qty1)
+          print(qty2)
           checkout(cfg.pid1,qty1,cfg.msg1V2,cfg.RefV2) 
           checkout(cfg.pid2,qty2,cfg.msg2V2,cfg.RefV2) 
           print("Checkout Success V4")
