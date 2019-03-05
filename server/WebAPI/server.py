@@ -571,9 +571,9 @@ def on_message(client, userdata, msg):
        a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
        if number1 > 0 :
-           print number1
+           print(number1)
        if number2 > 0 :
-           print number2
+           print(number2)
        #thread.start_new_thread(updatedba3, (number1,number2, ))
        #print(number1)
        #print(number2)
