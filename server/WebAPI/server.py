@@ -574,6 +574,8 @@ def on_message(client, userdata, msg):
        a3data=data
        socketio.emit('a3number', a3data, namespace='/a3test')
        #updatedba3(number1,number2)
+       print(number1)
+       print(number2)
        if(number1 > 0 ): 
            print(number1)
            db_table["a3tap1"]=number1
