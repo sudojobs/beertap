@@ -27,97 +27,15 @@ APIClientID = "d3c345808af848adb6c89a43a48e18be"
 APIClientSecret = "66f7456893ca4dce855bfa481a68aa9fe3a42b04a95d4ee2bbb385096cecded0"
 
 db_table['a3store']= {'tap1': ' 0', 'tap2': ' 0'}
-db_table['a3tap2']= 0
-db_table['a1tap1']= 0
-db_table['a1tap2']= 0
-db_table['a4tap1']= 0
-db_table['a4tap2']= 0
-db_table['a6tap1']= 0
-db_table['a6tap2']= 0
-db_table['c1tap1']= 0
-db_table['c1tap2']= 0
-db_table['c2tap1']= 0
-db_table['c2tap2']= 0
-db_table['c3tap1']= 0
-db_table['c3tap2']= 0
-db_table['v1tap1']= 0
-db_table['v1tap2']= 0
-db_table['v2tap1']= 0
-db_table['v2tap2']= 0
-db_table['v4tap1']= 0
-db_table['v4tap2']= 0
-
-def updatedba3(number1,number2):
-    print("Updating Value..")
-    print(number1,number2)
-    conn = sqlite3.connect('checkout.db')
-    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A3' ",(number1,))
-    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A3' ",(number2,))
-    conn.commit()
-    conn.exit()
-
-def updatedba1(number1,number2):
-    conn = sqlite3.connect('checkout.db')
-    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A1' ",(number1,))
-    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A1' ",(number2,))
-    conn.commit()
-    conn.exit()
-
-#def updatedba4(number1,number2):
-#    conn = sqlite3.connect('checkout.db')
-#    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A4' ",(number1,))
-#    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A4' ",(number2,))
-#    conn.commit()
-#    conn.exit()
-#
-#def updatedba6(number1,number2):
-#    conn = sqlite3.connect('checkout.db')
-#    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'A6' ",(number1,))
-#    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'A6' ",(number2,))
-#    conn.commit()
-#    conn.exit()
-#
-#def updatedbc1(number1,number2):
-#    conn = sqlite3.connect('checkout.db')
-#    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C1' ",(number1,))
-#    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C1' ",(number2,))
-#    conn.commit()
-#    conn.exit()
-#
-#def updatedbc2(number1,number2):
-#    conn = sqlite3.connect('checkout.db')
-#    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C2' ",(number1,))
-#    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C2' ",(number2,))
-#    conn.commit()
-#    conn.exit()
-#
-#def updatedbc3(number1,number2):
-#    conn = sqlite3.connect('checkout.db')
-#    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'C3' ",(number1,))
-#    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'C3' ",(number2,))
-#    conn.commit()
-#    conn.exit()
-#
-#def updatedbv4(number1,number2):
-#    conn = sqlite3.connect('checkout.db')
-#    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V4' ",(number1,))
-#    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V4' ",(number2,))
-#    conn.commit()
-#    conn.exit()
-#
-#def updatedbv1(number1,number2):
-#    conn = sqlite3.connect('checkout.db')
-#    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V1' ",(number1,))
-#    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V1' ",(number2,))
-#    conn.commit()
-#    conn.exit()
-#
-#def updatedbv2(number1,number2):
-#    conn = sqlite3.connect('checkout.db')
-#    conn.execute("UPDATE checkout set tap1 = ?  where ID = 'V2' ",(number1,))
-#    conn.execute("UPDATE checkout set tap2 = ?  where ID = 'V2' ",(number2,))
-#    conn.commit()
-#    conn.exit()
+db_table['a1store']= {'tap1': ' 0', 'tap2': ' 0'}
+db_table['a4store']= {'tap1': ' 0', 'tap2': ' 0'}
+db_table['a6store']= {'tap1': ' 0', 'tap2': ' 0'}
+db_table['c1store']= {'tap1': ' 0', 'tap2': ' 0'}
+db_table['c2store']= {'tap1': ' 0', 'tap2': ' 0'}
+db_table['c3store']= {'tap1': ' 0', 'tap2': ' 0'}
+db_table['v1store']= {'tap1': ' 0', 'tap2': ' 0'}
+db_table['v2store']= {'tap1': ' 0', 'tap2': ' 0'}
+db_table['v4store']= {'tap1': ' 0', 'tap2': ' 0'}
 
 
 # data to be sent to api
@@ -268,196 +186,100 @@ def order_placed(relay):
           aqty=db_table['a3store']
           qty1=int(aqty['tap1'])
           qty2=int(aqty['tap2'])
-          print(qty1)
-          print(qty2)
-          checkout(cfg.pid1,20,cfg.msg1A3,cfg.RefA3) 
-          checkout(cfg.pid2,40,cfg.msg2A3,cfg.RefA3) 
+          checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
+          checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
+          db_table['a3store']= {'tap1': ' 0', 'tap2': ' 0'}
        elif(relay['id']==2):
           print("Order Checkout A1")
-          connc = sqlite3.connect('checkout.db')
-          cursor = connc.execute("SELECT *  from checkout where ID ='A1'")
-          rows =cursor.fetchall()
-          for row in rows:
-              print(row[1])
-              qty1=row[1]
-              print(row[2])
-              qty2=row[2]
+          print(db_table['a1store'])
+          aqty=db_table['a1store']
+          qty1=int(aqty['tap1'])
+          qty2=int(aqty['tap2'])
           checkout(cfg.pid1,qty1,cfg.msg1A1,cfg.RefA1) 
           checkout(cfg.pid2,qty2,cfg.msg2A1,cfg.RefA1) 
           print("Checkout Success A1")
-          connc.execute("update checkout set tap1 =0  where id = 'A1'")
-          connc.execute("update checkout set tap2 =0  where id = 'A1'")
-          connc.commit()
-          connc.close()  
+          db_table['a1store']= {'tap1': ' 0', 'tap2': ' 0'}
        elif(relay['id']==3):
           print("Order Checkout A4")
-          #connc = sqlite3.connect('checkout.db')
-          #cursor = connc.execute("SELECT *  from checkout where ID ='A4'")
-          #rows =cursor.fetchall()
-          #for row in rows:
-          #    print(row[1])
-          #    qty1=row[1]
-          #    print(row[2])
-          #    qty2=row[2]
-          qty1=db_table["a4tap1"]
-          qty2=db_table["a4tap2"]
-          print(qty1)
-          print(qty2)
+          print(db_table['a4store'])
+          aqty=db_table['a4store']
+          qty1=int(aqty['tap1'])
+          qty2=int(aqty['tap2'])
           checkout(cfg.pid1,qty1,cfg.msg1A4,cfg.RefA4) 
           checkout(cfg.pid2,qty2,cfg.msg2A4,cfg.RefA4) 
           print("Checkout Success A4")
-          #connc.execute("update checkout set tap1 =0  where id = 'A4'")
-          #connc.execute("update checkout set tap2 =0  where id = 'A4'")
-          #connc.commit()
-          #connc.close()  
+          db_table['a4store']= {'tap1': ' 0', 'tap2': ' 0'}
        elif(relay['id']==4):
           print("Order Checkout A6")
-          #connc = sqlite3.connect('checkout.db')
-          #cursor = connc.execute("SELECT *  from checkout where ID ='A6'")
-          #rows =cursor.fetchall()
-          #for row in rows:
-          #    print(row[1])
-          #    qty1=row[1]
-          #    print(row[2])
-          #    qty2=row[2]
-          qty1=db_table["a6tap1"]
-          qty2=db_table["a6tap2"]
-          print(qty1)
-          print(qty2)
+          print(db_table['a6store'])
+          aqty=db_table['a6store']
+          qty1=int(aqty['tap1'])
+          qty2=int(aqty['tap2'])
           checkout(cfg.pid1,qty1,cfg.msg1A6,cfg.RefA6) 
           checkout(cfg.pid2,qty2,cfg.msg2A6,cfg.RefA6) 
           print("Checkout Success A6")
-          #connc.execute("update checkout set tap1 =0  where id = 'A6'")
-          #connc.execute("update checkout set tap2 =0  where id = 'A6'")
-          #connc.commit()
-          #connc.close()  
+          db_table['a6store']= {'tap1': ' 0', 'tap2': ' 0'}
        elif(relay['id']==5):
           print("Order Checkout C1")
-          #connc = sqlite3.connect('checkout.db')
-          #cursor = connc.execute("SELECT *  from checkout where ID ='C1'")
-          #rows =cursor.fetchall()
-          #for row in rows:
-          #    print(row[1])
-          #    qty1=row[1]
-          #    print(row[2])
-          #    qty2=row[2]
-          qty1=db_table["c1tap1"]
-          qty2=db_table["c1tap2"]
-          print(qty1)
-          print(qty2)
+          print(db_table['c1store'])
+          aqty=db_table['c1store']
+          qty1=int(aqty['tap1'])
+          qty2=int(aqty['tap2'])
           checkout(cfg.pid1,qty1,cfg.msg1C1,cfg.RefC1) 
           checkout(cfg.pid2,qty2,cfg.msg2C1,cfg.RefC1) 
           print("Checkout Success C1")
-          #connc.execute("update checkout set tap1 =0  where id = 'C1'")
-          #connc.execute("update checkout set tap2 =0  where id = 'C1'")
-          #connc.commit()
-          #connc.close()  
+          db_table['c1store']= {'tap1': ' 0', 'tap2': ' 0'}
        elif(relay['id']==6):
           print("Order Checkout C2")
-          #connc = sqlite3.connect('checkout.db')
-          #cursor = connc.execute("SELECT *  from checkout where ID ='C2'")
-          #rows =cursor.fetchall()
-          #for row in rows:
-          #    print(row[1])
-          #    qty1=row[1]
-          #    print(row[2])
-          #    qty2=row[2]
-          qty1=db_table["c2tap1"]
-          qty2=db_table["c2tap2"]
-          print(qty1)
-          print(qty2)
+          print(db_table['c2store'])
+          aqty=db_table['c2store']
+          qty1=int(aqty['tap1'])
+          qty2=int(aqty['tap2'])
           checkout(cfg.pid1,qty1,cfg.msg1C2,cfg.RefC2) 
           checkout(cfg.pid2,qty2,cfg.msg2C2,cfg.RefC2) 
           print("Checkout Success C2")
-          #connc.execute("update checkout set tap1 =0  where id = 'C2'")
-          #connc.execute("update checkout set tap2 =0  where id = 'C2'")
-          #connc.commit()
-          #connc.close()  
+          db_table['c2store']= {'tap1': ' 0', 'tap2': ' 0'}
        elif(relay['id']==7):
           print("Order Checkout C3")
-          #connc = sqlite3.connect('checkout.db')
-          #cursor = connc.execute("SELECT *  from checkout where ID ='C3'")
-          #rows =cursor.fetchall()
-          #for row in rows:
-          #    print(row[1])
-          #    qty1=row[1]
-          #    print(row[2])
-          #    qty2=row[2]
-          qty1=db_table["c3tap1"]
-          qty2=db_table["c3tap2"]
-          print(qty1)
-          print(qty2)
+          print(db_table['c3store'])
+          aqty=db_table['c3store']
+          qty1=int(aqty['tap1'])
+          qty2=int(aqty['tap2'])
           checkout(cfg.pid1,qty1,cfg.msg1C3,cfg.RefC3) 
           checkout(cfg.pid2,qty2,cfg.msg2C3,cfg.RefC3) 
           print("Checkout Success C3")
-          #connc.execute("update checkout set tap1 =0  where id = 'C3'")
-          #connc.execute("update checkout set tap2 =0  where id = 'C3'")
-          #connc.commit()
-          #connc.close()  
+          db_table['c3store']= {'tap1': ' 0', 'tap2': ' 0'}
        elif(relay['id']==8):
           print("Order Checkout V1")
-          #connc = sqlite3.connect('checkout.db')
-          #cursor = connc.execute("SELECT *  from checkout where ID ='V4'")
-          #rows =cursor.fetchall()
-          #for row in rows:
-          #    print(row[1])
-          #    qty1=row[1]
-          #    print(row[2])
-          #    qty2=row[2]
-          qty1=db_table["v4tap1"]
-          qty2=db_table["v4tap2"]
-          print(qty1)
-          print(qty2)
+          print(db_table['v1store'])
+          aqty=db_table['v1store']
+          qty1=int(aqty['tap1'])
+          qty2=int(aqty['tap2'])
+          checkout(cfg.pid1,qty1,cfg.msg1V1,cfg.RefV1) 
+          checkout(cfg.pid2,qty2,cfg.msg2V1,cfg.RefV1) 
+          print("Checkout Success V4")
+          db_table['v1store']= {'tap1': ' 0', 'tap2': ' 0'}
+       elif(relay['id']==9):
+          print("Order Checkout V2")
+          print(db_table['v1store'])
+          aqty=db_table['v1store']
+          qty1=int(aqty['tap1'])
+          qty2=int(aqty['tap2'])
+          checkout(cfg.pid1,qty1,cfg.msg1V2,cfg.RefV2) 
+          checkout(cfg.pid2,qty2,cfg.msg1V2,cfg.RefV2) 
+          print("Checkout Success V1")
+          db_table['v2store']= {'tap1': ' 0', 'tap2': ' 0'}
+       elif(relay['id']==10):
+          print("Order Checkout V4")
+          print(db_table['v2store'])
+          aqty=db_table['v2store']
+          qty1=int(aqty['tap1'])
+          qty2=int(aqty['tap2'])
           checkout(cfg.pid1,qty1,cfg.msg1V4,cfg.RefV4) 
           checkout(cfg.pid2,qty2,cfg.msg2V4,cfg.RefV4) 
           print("Checkout Success V4")
-          #connc.execute("update checkout set tap1 =0  where id = 'V4'")
-          #connc.execute("update checkout set tap2 =0  where id = 'V4'")
-          #connc.commit()
-          #connc.close()  
-       elif(relay['id']==9):
-          print("Order Checkout V2")
-          #connc = sqlite3.connect('checkout.db')
-          #cursor = connc.execute("SELECT *  from checkout where ID ='V1'")
-          #rows =cursor.fetchall()
-          #for row in rows:
-          #    print(row[1])
-          #    qty1=row[1]
-          #    print(row[2])
-          #    qty2=row[2]
-          qty1=db_table["v1tap1"]
-          qty2=db_table["v1tap2"]
-          print(qty1)
-          print(qty2)
-          checkout(cfg.pid1,qty1,cfg.msg1V1,cfg.RefV1) 
-          checkout(cfg.pid2,qty2,cfg.msg1V2,cfg.RefV1) 
-          print("Checkout Success V1")
-          #connc.execute("update checkout set tap1 =0  where id = 'V1'")
-          #connc.execute("update checkout set tap2 =0  where id = 'V1'")
-          #connc.commit()
-          #connc.close()  
-       elif(relay['id']==10):
-          print("Order Checkout V4")
-          #connc = sqlite3.connect('checkout.db')
-          #cursor = connc.execute("SELECT *  from checkout where ID ='V2'")
-          #rows =cursor.fetchall()
-          #for row in rows:
-          #    print(row[1])
-          #    qty1=row[1]
-          #    print(row[2])
-          #    qty2=row[2]
-          qty1=db_table["v2tap1"]
-          qty2=db_table["v2tap2"]
-          print(qty1)
-          print(qty2)
-          checkout(cfg.pid1,qty1,cfg.msg1V2,cfg.RefV2) 
-          checkout(cfg.pid2,qty2,cfg.msg2V2,cfg.RefV2) 
-          print("Checkout Success V4")
-          #connc.execute("update checkout set tap1 =0  where id = 'V2'")
-          #connc.execute("update checkout set tap2 =0  where id = 'V2'")
-          #connc.commit()
-          #connc.close()  
+          db_table['v4store']= {'tap1': ' 0', 'tap2': ' 0'}
 
 def UpdatePinFromRelayObject(relay):
     if(relay['id'] ==1):  
@@ -568,54 +390,49 @@ def on_message(client, userdata, msg):
        socketio.emit('a3number', a3data, namespace='/a3test')
     elif(msg.topic=='A1'):
        a1data=data
+       if data!= {'tap1': ' 0', 'tap2': ' 0'}:
+          db_table['a1store']= a1data 
        socketio.emit('a1number', a1data, namespace='/a1test')
-       thread.start_new_thread(updatedba1, (number1,number2, ))
     elif(msg.topic=='A4'):
        a4data=data 
+       if data!= {'tap1': ' 0', 'tap2': ' 0'}:
+          db_table['a4store']= a4data 
        socketio.emit('a4number', a4data, namespace='/a4test')
-       thread.start_new_thread(updatedba4, (number1,number2, ))
     elif(msg.topic=='A6'):
        a6data=data 
+       if data!= {'tap1': ' 0', 'tap2': ' 0'}:
+          db_table['a6store']= a6data 
        socketio.emit('newnumber', a6data, namespace='/test')
-       if(number1 > 0 ): db_table["a6tap1"]=number1
-       if(number2 > 0 ): db_table["a6tap2"]=number2
-       thread.start_new_thread(updatedba6, (number1,number2, ))
     elif(msg.topic=='C1'):
        c1data=data 
+       if data!= {'tap1': ' 0', 'tap2': ' 0'}:
+          db_table['c1store']= c1data 
        socketio.emit('c1number', c1data, namespace='/c1test')
-       if(number1 > 0 ): db_table["c1tap1"]=number1
-       if(number2 > 0 ): db_table["c1tap2"]=number2
-       #updatedbc1(number1,number2)
     elif(msg.topic=='C2'):
        c2data=data 
+       if data!= {'tap1': ' 0', 'tap2': ' 0'}:
+          db_table['c2store']= c2data 
        socketio.emit('c2number', c2data, namespace='/c2test')
-       if(number1 > 0 ): db_table["c2tap1"]=number1
-       if(number2 > 0 ): db_table["c2tap2"]=number2
-       #updatedbc2(number1,number2)
     elif(msg.topic=='C3'):
        c3data=data 
+       if data!= {'tap1': ' 0', 'tap2': ' 0'}:
+          db_table['c3store']= c3data 
        socketio.emit('c3number', c3data, namespace='/c3test')
-       if(number1 > 0 ): db_table["c3tap1"]=number1
-       if(number2 > 0 ): db_table["c3tap2"]=number2
-       #updatedbc3(number1,number2)
     elif(msg.topic=='V1'):
        v1data=data 
+       if data!= {'tap1': ' 0', 'tap2': ' 0'}:
+          db_table['v1store']= v1data 
        socketio.emit('v1number', v1data, namespace='/v1test')
-       if(number1 > 0 ): db_table["v1tap1"]=number1
-       if(number2 > 0 ): db_table["v1tap2"]=number2
-       #updatedbv1(number1,number2)
     elif(msg.topic=='V2'):
        v2data=data 
+       if data!= {'tap1': ' 0', 'tap2': ' 0'}:
+          db_table['v2store']= v2data 
        socketio.emit('v2number', v2data, namespace='/v2test')
-       if(number1 > 0 ): db_table["v2tap1"]=number1
-       if(number2 > 0 ): db_table["v2tap2"]=number2
-       #updatedbv2(number1,number2)
     elif(msg.topic=='V4'):
        v4data=data 
+       if data!= {'tap1': ' 0', 'tap2': ' 0'}:
+          db_table['v4store']= v4data 
        socketio.emit('v4number', v4data, namespace='/v4test')
-       if(number1 > 0 ): db_table["v4tap1"]=number1
-       if(number2 > 0 ): db_table["v4tap2"]=number2
-       #updatedbv4(number1,number2)
 
 
 if __name__ == "__main__":
