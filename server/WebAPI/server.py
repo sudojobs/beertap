@@ -277,13 +277,22 @@ def order_placed(relay):
           #print(qty1)
           #print(qty2)
           print(db_table['a3store'])
-          #checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
-          #checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
+          aqty=db_table['a3store'])
+          sup=aqty.split(",")
+          a=sup[0].split(":")
+          b=sup[1].split(":")
+          qty1=a[1]
+          temp=b[1] 
+          qty2=temp[:-1]
+          print(qty1)
+          print(qty2)
+          checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
+          checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
           #connc.execute("update checkout set tap1 =0  where id = 'A3'")
           #connc.execute("update checkout set tap2 =0  where id = 'A3'")
           #connc.commit()
-          connc.close()  
+          #connc.close()  
        elif(relay['id']==2):
           print("Order Checkout A1")
           connc = sqlite3.connect('checkout.db')
