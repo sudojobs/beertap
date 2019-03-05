@@ -572,16 +572,13 @@ def on_message(client, userdata, msg):
     #print(data)
     if(msg.topic=='A3'):
        a3data=data
+       if(number1 > 0 ): db_table["a3tap1"]=number1
+       if(number2 > 0 ): db_table["a3tap2"]=number2
        socketio.emit('a3number', a3data, namespace='/a3test')
        #updatedba3(number1,number2)
-       print(number1)
-       print(number2)
-       if(number1 > 0 ): 
-           print(number1)
-           db_table["a3tap1"]=number1
-       if(number2 > 0 ): 
-           print(number2)
-           db_table["a3tap2"]=number2
+       #print(number1)
+       #print(number2)
+       #     print(number1)
     elif(msg.topic=='A1'):
        a1data=data
        socketio.emit('a1number', a1data, namespace='/a1test')
