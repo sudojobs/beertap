@@ -82,17 +82,6 @@ def checkout(product_uid, quantity, remarks, table_ref_id):
 MQTT_PATH   =[ ("A4",0),("A6",0),("A1",0),("A3",0),("C1",0),("C2",0),("C3",0),("V1",0),("V2",0),("V4",0)]
 MQTT_SERVER= "localhost" 
 
-#fa1 = PiGPIOFactory(host='192.168.1.116')
-#fa4 = PiGPIOFactory(host='192.168.1.111')
-#fa3 = PiGPIOFactory(host='192.168.1.107')
-#fa6 = PiGPIOFactory(host='192.168.1.109')
-#fc1 = PiGPIOFactory(host='192.168.1.110')
-#fc2 = PiGPIOFactory(host='192.168.1.113')
-#fc3 = PiGPIOFactory(host='192.168.1.103')
-#fv1 = PiGPIOFactory(host='192.168.1.114')
-#fv2 = PiGPIOFactory(host='192.168.1.117')
-#fv4 = PiGPIOFactory(host='192.168.1.105')
-
 fa1 = PiGPIOFactory(host=cfg.A1ip)
 fa4 = PiGPIOFactory(host=cfg.A4ip)
 fa3 = PiGPIOFactory(host=cfg.A3ip)
@@ -258,7 +247,7 @@ def order_placed(relay):
           qty2=int(aqty['tap2'])
           checkout(cfg.pid1,qty1,cfg.msg1V1,cfg.RefV1) 
           checkout(cfg.pid2,qty2,cfg.msg2V1,cfg.RefV1) 
-          print("Checkout Success V4")
+          print("Checkout Success V1")
           db_table['v1store']= {'tap1': ' 0', 'tap2': ' 0'}
        elif(relay['id']==9):
           print("Order Checkout V2")
@@ -268,7 +257,7 @@ def order_placed(relay):
           qty2=int(aqty['tap2'])
           checkout(cfg.pid1,qty1,cfg.msg1V2,cfg.RefV2) 
           checkout(cfg.pid2,qty2,cfg.msg1V2,cfg.RefV2) 
-          print("Checkout Success V1")
+          print("Checkout Success V2")
           db_table['v2store']= {'tap1': ' 0', 'tap2': ' 0'}
        elif(relay['id']==10):
           print("Order Checkout V4")
