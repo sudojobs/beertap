@@ -264,7 +264,6 @@ def order_placed(relay):
     if(relay['state']=='off'):
        if(relay['id']== 1):
           print("Order Checkout A3")
-          sleep(15)
           connc = sqlite3.connect('checkout.db')
           cursor = connc.execute("SELECT *  from checkout where ID ='A3'")
           rows =cursor.fetchall()
