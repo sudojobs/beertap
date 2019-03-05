@@ -264,36 +264,13 @@ def order_placed(relay):
     if(relay['state']=='off'):
        if(relay['id']== 1):
           print("Order Checkout A3")
-          #connc = sqlite3.connect('checkout.db')
-          #cursor = connc.execute("SELECT *  from checkout where ID ='A3'")
-          #rows =cursor.fetchall()
-          #for row in rows:
-          #    print(row[1])
-          #    qty1=row[1]
-          #    print(row[2])
-          #    qty2=row[2]
-          #qty1=db_table['a3tap1']
-          #qty2=db_table['a3tap2']
-          #print(qty1)
-          #print(qty2)
           print(db_table['a3store'])
           aqty=db_table['a3store']
-          print(aqty['tap1'])
-          #sup=aqty.split(",")
-          #a=sup[0].split(":")
-          #b=sup[1].split(":")
-          #qty1=a[1]
-          #temp=b[1] 
-          #qty2=temp[:-1]
-          #print(qty1)
-          #print(qty2)
-          #checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
-          #checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
+          qty1=aqty['tap1']
+          qty2=aqty['tap2']
+          checkout(cfg.pid1,qty1,cfg.msg1A3,cfg.RefA3) 
+          checkout(cfg.pid2,qty2,cfg.msg2A3,cfg.RefA3) 
           print("Checkout Success A3")
-          #connc.execute("update checkout set tap1 =0  where id = 'A3'")
-          #connc.execute("update checkout set tap2 =0  where id = 'A3'")
-          #connc.commit()
-          #connc.close()  
        elif(relay['id']==2):
           print("Order Checkout A1")
           connc = sqlite3.connect('checkout.db')
