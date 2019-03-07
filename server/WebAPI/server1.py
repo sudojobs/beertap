@@ -23,7 +23,7 @@ API_ENDPOINT = "https://opi.hk.eats365.net/o/oauth2/token"
 
 RestaurantName = "WOM Limited牛魔"
 RestaurantCode = "HK059093"
-APIClientID = "d3c345808af848adb6c89a43a48e18be"                
+APIClientID = "80aa2427eccf4b39b927dc60255a9e75"                
 APIClientSecret = "37bceb1e2d164f72aebec76e535a0ac184cb5859e133430ebc9626d5e041b8a9"
                   
 
