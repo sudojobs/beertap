@@ -23,8 +23,9 @@ API_ENDPOINT = "https://opi.hk.eats365.net/o/oauth2/token"
 
 RestaurantName = "WOM Limited牛魔"
 RestaurantCode = "HK059093"
-APIClientID = "d3c345808af848adb6c89a43a48e18be"
+APIClientID = "d3c345808af848adb6c89a43a48e18be"                
 APIClientSecret = "37bceb1e2d164f72aebec76e535a0ac184cb5859e133430ebc9626d5e041b8a9"
+                  
 
 db_table['a3store']= {'tap1': ' 0', 'tap2': ' 0'}
 db_table['a1store']= {'tap1': ' 0', 'tap2': ' 0'}
@@ -65,7 +66,7 @@ HEADER = {'Authorization': head}
 def checkout(product_uid, quantity, remarks, table_ref_id):
     url_checkout = "https://opi.hk.eats365.net/v1/order/checkout"
     data = {
-        'restaurant_code': "HK054042",
+        'restaurant_code': "HK059093",
         'order_mode': 'dine_in',
         'cart_item_list': [{"product_uid": product_uid, "quantity": quantity, "remarks": remarks, 'modifier_list': []}],
         'reference_type': "table",
