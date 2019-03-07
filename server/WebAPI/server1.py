@@ -50,7 +50,7 @@ r = requests.post(url=API_ENDPOINT, data=data)
 # extracting response text
 pastebin_url = r.text
 
-exit()                            ### RM this
+
 accessdata = r.json()
 AccessToken = accessdata['access_token']
 TokenType = accessdata['token_type']
