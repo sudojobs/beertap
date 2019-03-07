@@ -19,7 +19,7 @@ db_table={}
 
 __author__ = '--'
 # defining the api-endpoint  
-API_ENDPOINT = "https://opi.hk.eats365.net/o/oauth2/token"
+API_ENDPOINT = "https://api.hk.eats365.net/o/oauth2/token"
 
 RestaurantName = "WOM Limited牛魔"
 RestaurantCode = "HK059093"
