@@ -26,21 +26,12 @@ table_list= ['192.168.1.107'
 ,'192.168.1.117'
 ,'192.168.1.114']
 
-
-
-
-
-
-
-
-
-
 #Product ID tap1=pid1 tap2=pid2
 #------------------------------
 pid1=4351152
 pid2=4351153
 
-# Table Name A3
+# Table Name 
 #--------------
 RefA3="70a7f10f-b609-439f-b6d1-80b1f5ddb48e"
 RefA1="696fcd6c-bae8-44ef-ab50-2be4c9f2f5ec"
