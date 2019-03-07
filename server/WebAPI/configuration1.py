@@ -33,8 +33,8 @@ pid2=5004952  #Suntory
 
 # Table Name 
 #--------------
-RefA3="70a7f10f-b609-439f-b6d1-80b1f5ddb48e"
-RefA1="7f592d83-8437-40da-a624-cfb9712e4991"
+RefA3="7f592d83-8437-40da-a624-cfb9712e4991" 
+RefA1="70a7f10f-b609-439f-b6d1-80b1f5ddb48e"
 RefA4="ebb3f92f-7020-43de-b290-eab2de043cae"
 RefA6="d57734d7-103a-4615-8bc7-d0737304dfd6"
 RefC1="f04b01da-9c52-4743-88d3-261b72b70705"  
