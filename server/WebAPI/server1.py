@@ -46,10 +46,12 @@ data = {'client_id': APIClientID,
 
 # sending post request and saving response as response object
 r = requests.post(url=API_ENDPOINT, data=data)
+print(r)
 
 # extracting response text
 pastebin_url = r.text
-
+print(pastebin_url)
+exit()                            ### RM this
 accessdata = r.json()
 AccessToken = accessdata['access_token']
 TokenType = accessdata['token_type']
