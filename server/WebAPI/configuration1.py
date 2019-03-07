@@ -28,8 +28,8 @@ table_list= ['192.168.1.107'
 
 #Product ID tap1=pid1 tap2=pid2
 #------------------------------
-pid1=4351152
-pid2=4351153
+pid1=5004952  #Hoegarden
+pid2=5004952  #Suntory
 
 # Table Name 
 #--------------
