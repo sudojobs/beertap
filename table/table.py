@@ -13,22 +13,21 @@ t1count = 0
 t2count = 0
 tap1 = 0
 tap2 = 0
+flag = 0 
+lastval1 = 0
+lastval2 = 0
 
 def tap1Pulse(channel):
    global t1count
-   time.sleep(0.5)      
    if (GPIO.input(tcfg.tap1)):
        global t1count
        t1count = t1count + 1
-       time.sleep(0.5)      
 
 def tap2Pulse(channel):
    global t2count
-   time.sleep(0.5)      
    if (GPIO.input(tcfg.tap2)):
        global t2count
        t2count = t2count + 1
-       time.sleep(0.5)      
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -43,14 +42,19 @@ while True:
      if(GPIO.input(tcfg.relay)):
         tap1 = t1count
         tap2 = t2count
-        message= {}
-        message['tap2']=tap2
-        message['tap1']=tap1
-        fullmessage=json.dumps(message) 
-        print(fullmessage) 
-        publish.single(tcfg.TABLE_ID,fullmessage, hostname=tcfg.TABLE_IP)
-  
+        if(lastval1!=tap1 or lastval2!=tap2):
+           message= {}
+           message['tap2']=tap2
+           message['tap1']=tap1
+           fullmessage=json.dumps(message) 
+           print(fullmessage) 
+           publish.single(tcfg.TABLE_ID,fullmessage, hostname=tcfg.TABLE_IP)
+           lastval1=tap1
+           lastval2=tap2
+           flag= 1
      else:
+      if(flag==1):
+        flag    = 0
         tap1    = 0
         t1count = 0
         tap2    = 0
@@ -61,7 +65,6 @@ while True:
         fullmessage=json.dumps(message)
         print(fullmessage) 
         publish.single(tcfg.TABLE_ID,fullmessage, hostname=tcfg.TABLE_IP)
-        time.sleep(0.5)
  except KeyboardInterrupt:
         # Reset GPIO settings
         GPIO.cleanup()
