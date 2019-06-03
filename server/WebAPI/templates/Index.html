@@ -23,15 +23,21 @@
        </tr> --!>
       </thead>
       <tbody>
-      <tr> <!-- ng-repeat="item in relays"> 
-          <td class="vert-align" ng-bind="item.id"></td>
-          <td class="vert-align">
+      <tr>  
+          <td class="vert-align" ng-repeat="item in relays | limitTo :5 : 0" >
             <b ng-bind="item.name"</b>
-	    </td> --!>
-          <td class="vert-align" ng-repeat="item in relays | limitTo : 5 : 0" >
+	    </td>
+       </tr>
+       <tr> 
+        <td class="vert-align" ng-repeat="item in relays | limitTo : 5 : 0" >
           <img ng-src=[[item.image]] ng-click="toggleRelay(item)">
           </td>
           </tr>
+      <tr>  
+          <td class="vert-align" ng-repeat="item in relays | limitTo :9 : 5" >
+            <b ng-bind="item.name"</b>
+	    </td>
+       </tr>
 	  <tr>
           <td class="vert-align" ng-repeat="item in relays | limitTo : 9 : 5" >
           <img ng-src=[[item.image]] ng-click="toggleRelay(item)">

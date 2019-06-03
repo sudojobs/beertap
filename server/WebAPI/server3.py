@@ -84,78 +84,55 @@ def checkout(product_uid, quantity, remarks, table_ref_id):
 MQTT_PATH   =[ ("A4",0),("A6",0),("A1",0),("A3",0),("C1",0),("C2",0),("C3",0),("V1",0),("V2",0),("V4",0)]
 MQTT_SERVER= "localhost" 
 
+reta1 = os.system("fping 192.168.1.116")
+if reta1 == 0:
+   fa1 = PiGPIOFactory(host=cfg.A1ip)
+   A1 = LED(24, pin_factory=fa1)
 
-def taba1():
-    reta1 = os.system("fping 192.168.1.116")
-    if reta1 == 0:
-       fa1 = PiGPIOFactory(host=cfg.A1ip)
-       A1 = LED(24, pin_factory=fa1)
+reta4 = os.system("fping 192.168.1.117")
+if reta4 == 0:
+   fa4 = PiGPIOFactory(host=cfg.A4ip)
+   A4 = LED(24, pin_factory=fa4)
 
-def taba4():
-    reta4 = os.system("fping 192.168.1.116")
-    if reta4 == 0:
-       fa4 = PiGPIOFactory(host=cfg.A4ip)
-       A4 = LED(24, pin_factory=fa4)
+reta3 = os.system("fping 192.168.1.111")
+if reta3 == 0:
+   fa3 = PiGPIOFactory(host=cfg.A3ip)
+   A3 = LED(24, pin_factory=fa3)   
 
-def taba3():   
-    reta3 = os.system("fping 192.168.1.116")
-    if reta3 == 0:
-       fa3 = PiGPIOFactory(host=cfg.A3ip)
-       A3 = LED(24, pin_factory=fa3)   
+reta6 = os.system("fping 192.168.1.109")
+if reta6 == 0:
+   fa6 = PiGPIOFactory(host=cfg.A6ip)
+   A6 = LED(24, pin_factory=fa6) 
 
-def taba6():   
-    reta6 = os.system("fping 192.168.1.116")
-    if reta6 == 0:
-       fa6 = PiGPIOFactory(host=cfg.A6ip)
-       A6 = LED(24, pin_factory=fa6) 
+retc1 = os.system("fping 192.168.1.110")
+if retc1 ==0:
+   fc1 = PiGPIOFactory(host=cfg.C1ip)
+   C1 = LED(24, pin_factory=fc1) 
 
-def tabc1():   
-    retc1 = os.system("fping 192.168.1.117")
-    if retc1 ==0:
-       fc1 = PiGPIOFactory(host=cfg.C1ip)
-       C1 = LED(24, pin_factory=fc1) 
+retc2 = os.system("fping 192.168.1.113")
+if retc2 ==0:
+   fc2 = PiGPIOFactory(host=cfg.C2ip)
+   C2 = LED(24, pin_factory=fc2) 
 
-def tabc2():
-    retc2 = os.system("fping 192.168.1.117")
-    if retc2 ==0:
-       fc2 = PiGPIOFactory(host=cfg.C2ip)
-       C2 = LED(24, pin_factory=fc2) 
+retc3 = os.system("fping 192.168.1.103")
+if retc3 ==0:
+   fc3 = PiGPIOFactory(host=cfg.C3ip)
+   C3 = LED(24, pin_factory=fc3) 
 
-def tabc3():
-    retc3 = os.system("fping 192.168.1.117")
-    if retc3 ==0:
-       fc3 = PiGPIOFactory(host=cfg.C3ip)
-       C3 = LED(24, pin_factory=fc3) 
+retv1 = os.system("fping 192.168.1.114")
+if retv1 ==0:
+   fv1 = PiGPIOFactory(host=cfg.V1ip)
+   V1 = LED(24, pin_factory=fv1) 
 
-def tabv1():
-    retv1 = os.system("fping 192.168.1.117")
-    if retv1 ==0:
-       fv1 = PiGPIOFactory(host=cfg.V1ip)
-       V1 = LED(24, pin_factory=fv1) 
+retv2 = os.system("fping 192.168.1.117")
+if retv2 ==0:
+   fv2 = PiGPIOFactory(host=cfg.V2ip)
+   V2 = LED(24, pin_factory=fv2) 
 
-def tabv2():
-    retv2 = os.system("fping 192.168.1.117")
-    if retv2 ==0:
-       fv2 = PiGPIOFactory(host=cfg.V2ip)
-       V2 = LED(24, pin_factory=fv2) 
-
-def tabv4():
-    retv4 = os.system("fping 192.168.1.117")
-    if retv4 ==0:
-       fv4 = PiGPIOFactory(host=cfg.V4ip)
-       V4 = LED(24, pin_factory=fv4) 
-
-taba1()
-taba4()
-taba3()
-taba6()
-tabc1()
-tabc2()
-tabc3()
-tabv1()
-tabv2()
-tabv4()
-
+retv4 = os.system("fping 192.168.1.105")
+if retv4 ==0:
+   fv4 = PiGPIOFactory(host=cfg.V4ip)
+   V4 = LED(24, pin_factory=fv4) 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
@@ -487,4 +464,4 @@ if __name__ == "__main__":
         client.loop_start()
         socketio.run(app,host='0.0.0.0',port=80,debug=False)
     finally:
-print("cleaning up")
+        print("cleaning up")
